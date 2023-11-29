@@ -24,7 +24,7 @@ class Game_Session:
         self.player_group = pygame.sprite.GroupSingle()
         self.ground_group = pygame.sprite.Group()
         ground_rect = pygame.Rect(0, 390, 800, 10)
-        ground_rect1 = pygame.Rect(350, 330, 3000, 10)
+        ground_rect1 = pygame.Rect(350, 300, 3000, 10)
         self.floor = Floor(ground_rect, screen, self.ground_group)
         self.floor1 = Floor(ground_rect1, screen, self.ground_group)
         self.ground_group.add(self.floor)

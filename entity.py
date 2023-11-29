@@ -68,7 +68,7 @@ class Player(pygame.sprite.Sprite):
         self.dest_rect_index = 0
         self.jumping = False 
         self.attacking = False
-        self.font_size = 36
+        self.font_size = 20
         self.font = pygame.font.Font('fonts/CaskaydiaCoveNerdFont-Regular.ttf', self.font_size)
 
         # Test propeties
@@ -77,6 +77,7 @@ class Player(pygame.sprite.Sprite):
         self.velocity = 300
         self.horizontal_velocity = 0
         self.vertical_velocity = 0
+        self.in_air = True
 
     def setup(self):
         self.load_img(self.images_dirctory_path_relative_to_main_file)
@@ -97,7 +98,7 @@ class Player(pygame.sprite.Sprite):
     def move(self, event):
         if not self.attacking:
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_e:
+                if event.key == pygame.K_j:
                     self.horizontal_velocity = 0
                     self.attacking = True
                     self.image_index = 'Attack1'
@@ -122,29 +123,55 @@ class Player(pygame.sprite.Sprite):
                     if event.key == pygame.K_d:
                         self.horizontal_velocity -= self.velocity
 
-    def updata_pos(self, dt):
+    def updata_pos(self, dt, screen):
         # Updata Position
-        # Gravity and Jump
-        self.vertical_velocity += 2500 * dt 
-        """
-        if self.rect.bottom - 75  >= 400:
-            self.rect.bottom = 400 +75
-            self.vertical_velocity = 0
-            self.jumping = False
-        """
-        # left and right movement
-        collision_with_ground = pygame.sprite.spritecollide(self, self.ground_group, dokill=False)
-        for ground in collision_with_ground:
-            if self.body_rect.bottom > ground.rect.top:
-                self.body_rect.bottom = ground.rect.top 
-                self.vertical_velocity = 0
-                # print("collision", self.body_rect.bottom, ground.rect.top)
-                self.jumping = False
+        if self.in_air:
+            self.vertical_velocity += 2500 * dt 
+
         if not self.attacking:
             self.x_position += self.horizontal_velocity * dt 
             self.y_position += self.vertical_velocity * dt 
+
+# left and right movement
+        collision_with_ground = pygame.sprite.spritecollide(self, self.ground_group, dokill=False)
+
+        for ground in collision_with_ground:
+            if self.body_rect.bottom > ground.rect.top:
+                self.body_rect.bottom = ground.rect.top
+                self.y_position = ground.rect.top - self.body_rect.height
+                self.vertical_velocity = 0
+                self.jumping = False
+
+            elif self.body_rect.top < ground.rect.bottom:
+                self.body_rect.top = ground.rect.bottom
+                self.y_position = ground.rect.bottom
+                self.vertical_velocity = 0
+
+            # Check if the player is on the ground before adjusting x-position
+            elif self.body_rect.right > ground.rect.left and self.horizontal_velocity > 0:
+                self.body_rect.right = ground.rect.left
+                self.x_position = ground.rect.left - self.body_rect.width
+
+            elif self.body_rect.left < ground.rect.right and self.horizontal_velocity < 0:
+                self.body_rect.left = ground.rect.right
+                self.x_position = ground.rect.right
+
         self.body_rect.x = int(self.x_position)
         self.body_rect.y = int(self.y_position)
+
+        text = f"{str(self.jumping): <6}, {str(self.vertical_velocity): <10}, {str(self.rect.bottom): <10}"
+            # Render text
+        text_surface = self.font.render(text, True, (255,255,255))
+
+        # Get the rectangle of the text surface
+
+        text_rect = text_surface.get_rect()
+
+        # Center the text on the screen
+        text_rect.topleft = (0, 60)
+
+        # Blit the text surface onto the screen
+        screen.blit(text_surface, text_rect)
 
 
     def def_animation(self):
@@ -165,7 +192,7 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self, screen):
         self.blit_rect = pygame.Rect(self.body_rect.x - 75, self.body_rect.y - 75, self.image_size, self.image_size)
-        pygame.draw.rect(screen, (255, 255, 255), self.body_rect)
+        # pygame.draw.rect(screen, (255, 255, 255), self.body_rect)
         screen.blit(
                     self.images[self.image_index][self.direction], # Imgae ( images, which image, what dirrection )
                     self.blit_rect, # Draw rect ( where to draw )
@@ -179,10 +206,12 @@ class Player(pygame.sprite.Sprite):
             self.dest_rect_index = 0
             if self.attacking:
                 self.attacking = False
+                self.vertical_velocity = 0
                 keys = pygame.key.get_pressed()
                 if keys[pygame.K_d]:
                     self.horizontal_velocity += self.velocity
                     print("d is pressed", self.horizontal_velocity, self.velocity)
+                
                 if keys[pygame.K_a]:
                     self.horizontal_velocity -= self.velocity
                     print("a is pressed", self.horizontal_velocity, self.velocity)
@@ -190,17 +219,18 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.body_rect
         self.clock += dt
         
-        self.update_indexes(dt)
-
         # Update animation
+        self.update_indexes(dt)
         self.def_animation()
-        
-        
-        self.updata_pos(dt)
 
-        # Draw sprite on screen
+
+        self.updata_pos(dt, screen)
+        
         self.draw(screen)
-        text = f"{str(self.jumping): <6}, {str(self.vertical_velocity): <10}, {str(self.rect.bottom - 75): <10}"
+        
+        # wierd text stuff
+        # Draw sprite on screen
+        text = f"{str(self.jumping): <6}, {str(self.vertical_velocity): <10}, {str(self.rect.bottom): <10}"
             # Render text
         text_surface = self.font.render(text, True, (255,255,255))
 
