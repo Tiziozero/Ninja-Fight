@@ -56,7 +56,9 @@ class Player(pygame.sprite.Sprite):
         self.images_right = {}
         self.image_index = 'Idle'
         self.image_format = '.png'
-        self.rect = pygame.Rect(0, 0, self.image_size, self.image_size)
+        self.blit_rect = pygame.Rect(0, 0, self.image_size, self.image_size)
+        self.body_rect = pygame.Rect(0, 0, 50, 50)
+        self.rect = pygame.Rect(0,0,0,0)
         self.offset = 150
 
         # Animation Stuff
@@ -133,16 +135,16 @@ class Player(pygame.sprite.Sprite):
         # left and right movement
         collision_with_ground = pygame.sprite.spritecollide(self, self.ground_group, dokill=False)
         for ground in collision_with_ground:
-            if self.rect.bottom - 75 > ground.rect.top:
-                self.body_rect.bottom = ground.rect.top + 75
+            if self.body_rect.bottom > ground.rect.top:
+                self.body_rect.bottom = ground.rect.top 
                 self.vertical_velocity = 0
                 # print("collision", self.body_rect.bottom, ground.rect.top)
                 self.jumping = False
         if not self.attacking:
             self.x_position += self.horizontal_velocity * dt 
             self.y_position += self.vertical_velocity * dt 
-        self.rect.x = int(self.x_position)
-        self.rect.y = int(self.y_position)
+        self.body_rect.x = int(self.x_position)
+        self.body_rect.y = int(self.y_position)
 
 
     def def_animation(self):
@@ -162,14 +164,11 @@ class Player(pygame.sprite.Sprite):
 
 
     def draw(self, screen):
-        self.body_rect.x = (self.rect.x + self.offset // 2)
-        self.body_rect.y = (self.rect.y + self.offset // 2)
-        self.body_rect.w = (self.rect.w - self.offset)
-        self.body_rect.h = (self.rect.h - self.offset)
+        self.blit_rect = pygame.Rect(self.body_rect.x - 75, self.body_rect.y - 75, self.image_size, self.image_size)
         pygame.draw.rect(screen, (255, 255, 255), self.body_rect)
         screen.blit(
                     self.images[self.image_index][self.direction], # Imgae ( images, which image, what dirrection )
-                    self.rect, # Draw rect ( where to draw )
+                    self.blit_rect, # Draw rect ( where to draw )
                     self.image_dest_rect[self.image_index][self.direction][int(self.dest_rect_index)] # Which tile ( destination rects, for which image, what direction )
                 )
 
@@ -188,6 +187,7 @@ class Player(pygame.sprite.Sprite):
                     self.horizontal_velocity -= self.velocity
                     print("a is pressed", self.horizontal_velocity, self.velocity)
     def update(self, screen, dt):
+        self.rect = self.body_rect
         self.clock += dt
         
         self.update_indexes(dt)
