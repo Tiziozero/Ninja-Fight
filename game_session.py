@@ -19,6 +19,7 @@ class Floor(pygame.sprite.Sprite):
 
 class Game_Session:
     def __init__(self, screen):
+        self.QuitGame = False
         self.screen = screen
         self.rect = (100,100,400,200)
         self.draw_sprites = pygame.sprite.Group()
@@ -37,7 +38,7 @@ class Game_Session:
         test_en = entity.Player('00000001', "graphics/sprites/", self.draw_sprites, self.ground_group)
         test_en.setup()
         p_time = time.time()
-        while True:
+        while not self.QuitGame:
             dt = time.time() - p_time
             p_time = time.time()
             for event in pygame.event.get():
