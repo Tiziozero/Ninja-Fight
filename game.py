@@ -1,9 +1,11 @@
 import pygame
 import game_session
+import debug
 class Game:
     def __init__(self):
         pygame.init()
         self.screen = pygame.display.set_mode((800, 400))
+        debug.screen = self.screen
         print("Game created")
 
     def run(self):

@@ -1,5 +1,5 @@
 import pygame, os, sys, time
-from debug import debug
+from debug import debug, print_debug
 
 class Entity(pygame.sprite.Sprite):
     def __init__(self, entity_id, img_dir_path, groups):
@@ -125,61 +125,43 @@ class Player(pygame.sprite.Sprite):
 
     def updata_pos(self, dt, screen):
         # Updata Position
-        if self.in_air:
-            self.vertical_velocity += 2500 * dt 
+        self.vertical_velocity += 2500 * dt 
 
-        if not self.attacking:
-            self.x_position += self.horizontal_velocity * dt 
-            self.y_position += self.vertical_velocity * dt 
 
-# left and right movement
         collision_with_ground = pygame.sprite.spritecollide(self, self.ground_group, dokill=False)
 
+        t = f"after calculation: {self.vertical_velocity}"
+        debug(t)
         for ground in collision_with_ground:
-            
             if self.body_rect.bottom > ground.rect.top:
                 if self.vertical_velocity >= 0:
                     self.body_rect.bottom = ground.rect.top
                     self.y_position = ground.rect.top - self.body_rect.height
                     self.vertical_velocity = 0
-                    self.jumping = False
 
-            # elif self.body_rect.top < ground.rect.bottom:
+                    
+                    self.jumping = False
+                    print(f" collision with vel >= 0, vel: {self.vertical_velocity}")
+
                 elif self.vertical_velocity < 0:
                     self.body_rect.top = ground.rect.bottom
                     self.y_position = ground.rect.bottom
                     self.vertical_velocity = 0
 
-            # Check if the player is on the ground before adjusting x-position
-            """
-            if self.body_rect.right > ground.rect.left and self.horizontal_velocity > 0:
-                if self.horizontal_velocity >= 0:
+        t = f"after collision check: {self.vertical_velocity}"
+        debug(t)
+        if self.vertical_velocity == 0:
+            print("vvel is 0")
+        else:
+            print(f"vvel is not 0, {self.vertical_velocity}, {self.body_rect.y}")
 
-                    self.body_rect.right = ground.rect.left
-                    self.x_position = ground.rect.left - self.body_rect.width
-
-            elif self.horizontal_velocity < 0:
-                if self.body_rect.left < ground.rect.right and self.horizontal_velocity < 0:
-                    self.body_rect.left = ground.rect.right
-                    self.x_position = ground.rect.right
-            """
+        if not self.attacking:
+            self.x_position += self.horizontal_velocity * dt 
+            self.y_position += self.vertical_velocity * dt 
         self.body_rect.x = int(self.x_position)
         self.body_rect.y = int(self.y_position)
-
-        text = f"{str(self.jumping): <6}, {str(self.vertical_velocity): <10}, {str(self.rect.bottom): <10}"
-            # Render text
-        text_surface = self.font.render(text, True, (255,255,255))
-
-        # Get the rectangle of the text surface
-
-        text_rect = text_surface.get_rect()
-
-        # Center the text on the screen
-        text_rect.topleft = (0, 60)
-
-        # Blit the text surface onto the screen
-        screen.blit(text_surface, text_rect)
-
+        t = f"after 1: {str(self.vertical_velocity): <25}, sefl.boddy_rext.: {self.body_rect.y}"
+        debug(t)
 
     def def_animation(self):
         # Update animation
@@ -195,6 +177,8 @@ class Player(pygame.sprite.Sprite):
 
             if self.jumping:
                 self.image_index= 'Jump'
+        if self.vertical_velocity > 0:
+            self.image_index = 'Fall'
 
 
     def draw(self, screen):
@@ -209,6 +193,7 @@ class Player(pygame.sprite.Sprite):
     def update_indexes(self, dt):
         # checks if frame is less than 8 (needs optimisation for all animation lengths)
         self.dest_rect_index += dt * self.animation_speed 
+        print(f"{int(self.dest_rect_index)}, {str(len(self.image_dest_rect)): <5}, {self.image_index}, ")
         if self.dest_rect_index >= len(self.image_dest_rect[self.image_index][self.direction]):
             self.dest_rect_index = 0
             if self.attacking:
@@ -226,42 +211,11 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.body_rect
         self.clock += dt
         
-        # Update animation
+        self.updata_pos(dt, screen)
         self.update_indexes(dt)
         self.def_animation()
-
-
-        self.updata_pos(dt, screen)
         
         self.draw(screen)
         
-        # debug(f"{str(self.jumping): <6}, {str(self.vertical_velocity): <20}, {str(self.rect.bottom): <10}")
-        # wierd text stuff
-        # Draw sprite on screen
-        text = f"{str(self.jumping): <6}, {str(self.vertical_velocity): <10}, {str(self.rect.bottom): <10}"
-            # Render text
-        text_surface = self.font.render(text, True, (255,255,255))
-
-        # Get the rectangle of the text surface
-
-        text_rect = text_surface.get_rect()
-
-        # Center the text on the screen
-        text_rect.topleft = (0, 0)
-
-        # Blit the text surface onto the screen
-        screen.blit(text_surface, text_rect)
-
-        text = f"{str(self.attacking): <6}, {str(self.horizontal_velocity): <10}, {str(): <10}"
-            # Render text
-        text_surface = self.font.render(text, True, (255,255,255))
-
-        # Get the rectangle of the text surface
-
-        text_rect = text_surface.get_rect()
-
-        # Center the text on the screen
-        text_rect.topleft = (0, 30)
-
-        # Blit the text surface onto the screen
-        screen.blit(text_surface, text_rect)
+        t = (f"{str(self.jumping): <6}, {str(self.vertical_velocity): <20}, {str(self.rect.bottom): <10}")
+        debug(t)
