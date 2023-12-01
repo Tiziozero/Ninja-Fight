@@ -183,6 +183,10 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self, screen):
         self.blit_rect = pygame.Rect(self.body_rect.x - 75, self.body_rect.y - 75, self.image_size, self.image_size)
+        currentThingy = self.image_dest_rect[self.image_index][self.direction]
+
+        if self.dest_rect_index > len(currentThingy):
+            self.dest_rect_index = len(currentThingy)-0.01
         # pygame.draw.rect(screen, (255, 255, 255), self.body_rect)
         screen.blit(
                     self.images[self.image_index][self.direction], # Imgae ( images, which image, what dirrection )
