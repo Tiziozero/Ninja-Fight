@@ -187,7 +187,7 @@ class Player(pygame.sprite.Sprite):
         screen.blit(
                     self.images[self.image_index][self.direction], # Imgae ( images, which image, what dirrection )
                     self.blit_rect, # Draw rect ( where to draw )
-                    self.image_dest_rect[self.image_index][self.direction][int(self.dest_rect_index)] # Which tile ( destination rects, for which image, what direction )
+                    self.image_dest_rect[self.image_index][self.direction][int(self.dest_rect_index)-1] # Which tile ( destination rects, for which image, what direction )
                 )
 
     def update_indexes(self, dt):
