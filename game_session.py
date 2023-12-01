@@ -1,6 +1,7 @@
 import pygame
 import entity
 import time
+from debug import *
 
 class Floor(pygame.sprite.Sprite):
     def __init__(self, rect, screen, group):
@@ -54,5 +55,6 @@ class Game_Session:
             # self.floor.draw()
             self.ground_group.draw(screen)
             test_en.update(screen, dt)
+            print_debug()
 
             pygame.display.flip()

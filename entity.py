@@ -1,6 +1,5 @@
-import pygame, os, sys
-from pygame.sprite import Sprite
-
+import pygame, os, sys, time
+from debug import debug
 
 class Entity(pygame.sprite.Sprite):
     def __init__(self, entity_id, img_dir_path, groups):
@@ -78,6 +77,7 @@ class Player(pygame.sprite.Sprite):
         self.horizontal_velocity = 0
         self.vertical_velocity = 0
         self.in_air = True
+        self.jump_hight = 800
 
     def setup(self):
         self.load_img(self.images_dirctory_path_relative_to_main_file)
@@ -110,7 +110,7 @@ class Player(pygame.sprite.Sprite):
                     self.dest_rect_index = 0
                 if event.key == pygame.K_SPACE:
                     if not self.jumping:
-                        self.vertical_velocity = -1000
+                        self.vertical_velocity = -self.jump_hight
                     self.dest_rect_index = 0
                     self.rect.y -= 1
                     self.jumping = True
@@ -136,26 +136,33 @@ class Player(pygame.sprite.Sprite):
         collision_with_ground = pygame.sprite.spritecollide(self, self.ground_group, dokill=False)
 
         for ground in collision_with_ground:
+            
             if self.body_rect.bottom > ground.rect.top:
-                self.body_rect.bottom = ground.rect.top
-                self.y_position = ground.rect.top - self.body_rect.height
-                self.vertical_velocity = 0
-                self.jumping = False
+                if self.vertical_velocity >= 0:
+                    self.body_rect.bottom = ground.rect.top
+                    self.y_position = ground.rect.top - self.body_rect.height
+                    self.vertical_velocity = 0
+                    self.jumping = False
 
-            elif self.body_rect.top < ground.rect.bottom:
-                self.body_rect.top = ground.rect.bottom
-                self.y_position = ground.rect.bottom
-                self.vertical_velocity = 0
+            # elif self.body_rect.top < ground.rect.bottom:
+                elif self.vertical_velocity < 0:
+                    self.body_rect.top = ground.rect.bottom
+                    self.y_position = ground.rect.bottom
+                    self.vertical_velocity = 0
 
             # Check if the player is on the ground before adjusting x-position
-            elif self.body_rect.right > ground.rect.left and self.horizontal_velocity > 0:
-                self.body_rect.right = ground.rect.left
-                self.x_position = ground.rect.left - self.body_rect.width
+            """
+            if self.body_rect.right > ground.rect.left and self.horizontal_velocity > 0:
+                if self.horizontal_velocity >= 0:
 
-            elif self.body_rect.left < ground.rect.right and self.horizontal_velocity < 0:
-                self.body_rect.left = ground.rect.right
-                self.x_position = ground.rect.right
+                    self.body_rect.right = ground.rect.left
+                    self.x_position = ground.rect.left - self.body_rect.width
 
+            elif self.horizontal_velocity < 0:
+                if self.body_rect.left < ground.rect.right and self.horizontal_velocity < 0:
+                    self.body_rect.left = ground.rect.right
+                    self.x_position = ground.rect.right
+            """
         self.body_rect.x = int(self.x_position)
         self.body_rect.y = int(self.y_position)
 
@@ -228,6 +235,7 @@ class Player(pygame.sprite.Sprite):
         
         self.draw(screen)
         
+        # debug(f"{str(self.jumping): <6}, {str(self.vertical_velocity): <20}, {str(self.rect.bottom): <10}")
         # wierd text stuff
         # Draw sprite on screen
         text = f"{str(self.jumping): <6}, {str(self.vertical_velocity): <10}, {str(self.rect.bottom): <10}"
