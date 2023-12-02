@@ -1,4 +1,4 @@
-import pygame, os, sys, time
+import pygame, os, sys, time, math
 from debug import debug, print_debug
 
 class Entity(pygame.sprite.Sprite):
@@ -123,7 +123,7 @@ class Player(pygame.sprite.Sprite):
                     if event.key == pygame.K_d:
                         self.horizontal_velocity -= self.velocity
 
-    def updata_pos(self, dt, screen):
+    """def updata_pos(self, dt, screen):
         # Updata Position
         self.vertical_velocity += 2500 * dt 
 
@@ -132,10 +132,14 @@ class Player(pygame.sprite.Sprite):
 
         t = f"after calculation: {self.vertical_velocity}"
         debug(t)
+        t = f"no of strites it collides with: {str(len(collision_with_ground)): <5} and self.body_rect.y {self.body_rect.y}"
+        debug(t)
+
         for ground in collision_with_ground:
             if self.body_rect.bottom > ground.rect.top:
                 if self.vertical_velocity >= 0:
-                    self.body_rect.bottom = ground.rect.top
+                    # self.body_rect.bottom = ground.rect.top
+
                     self.y_position = ground.rect.top - self.body_rect.height
                     self.vertical_velocity = 0
 
@@ -158,7 +162,36 @@ class Player(pygame.sprite.Sprite):
         if not self.attacking:
             self.x_position += self.horizontal_velocity * dt 
             self.y_position += self.vertical_velocity * dt 
-        self.body_rect.x = int(self.x_position)
+        self.body_rect.x = int(math.ceil(self.x_position))
+        self.body_rect.y = int(self.y_position)
+        t = f"after 1: {str(self.vertical_velocity): <25}, sefl.boddy_rext.: {self.body_rect.y}"
+        debug(t)"""
+    def updata_pos(self, dt, screen):
+        # Updata Position
+        self.vertical_velocity += 2500 * dt 
+
+
+        collision_with_ground = pygame.sprite.spritecollide(self, self.ground_group, dokill=False)
+        for floor in self.ground_group:
+            if self.rect.bottom >= floor.rect.top and self.rect.bottom <= floor.rect.bottom:
+                if self.rect.right >= floor.rect.left and self.rect.right <= floor.rect.right:
+                    debug("ye ye ye ye ye")
+                    print("ye ye ye ye ye")
+                    self.rect.bottom = floor.rect.top
+                    self.vertical_velocity = 0
+                    self.jumping = False
+
+        t = f"after calculation: {self.vertical_velocity}"
+        debug(t)
+        t = f"no of strites it collides with: {str(len(collision_with_ground)): <5} and self.body_rect.y {self.body_rect.y}"
+        debug(t)
+        t = f"after collision check: {self.vertical_velocity}"
+        debug(t)
+
+        if not self.attacking:
+            self.x_position += self.horizontal_velocity * dt 
+            self.y_position += self.vertical_velocity * dt 
+        self.body_rect.x = int(math.ceil(self.x_position))
         self.body_rect.y = int(self.y_position)
         t = f"after 1: {str(self.vertical_velocity): <25}, sefl.boddy_rext.: {self.body_rect.y}"
         debug(t)
@@ -166,6 +199,13 @@ class Player(pygame.sprite.Sprite):
     def def_animation(self):
         # Update animation
         if not self.attacking:
+
+            if self.jumping:
+                self.image_index= 'Jump'
+        if self.vertical_velocity > 0:
+            self.image_index = 'Fall'
+        elif self.vertical_velocity == 0:
+            self.image_index = 'Idle'
             if self.horizontal_velocity > 0:
                 self.image_index = 'Run'
                 self.direction = 0
@@ -174,11 +214,6 @@ class Player(pygame.sprite.Sprite):
                 self.direction = 1
             else:
                 self.image_index = 'Idle'
-
-            if self.jumping:
-                self.image_index= 'Jump'
-        if self.vertical_velocity > 0:
-            self.image_index = 'Fall'
 
 
     def draw(self, screen):
@@ -197,7 +232,7 @@ class Player(pygame.sprite.Sprite):
     def update_indexes(self, dt):
         # checks if frame is less than 8 (needs optimisation for all animation lengths)
         self.dest_rect_index += dt * self.animation_speed 
-        print(f"{int(self.dest_rect_index)}, {str(len(self.image_dest_rect)): <5}, {self.image_index}, ")
+        # print(f"{int(self.dest_rect_index)}, {str(len(self.image_dest_rect)): <5}, {self.image_index}, ")
         if self.dest_rect_index >= len(self.image_dest_rect[self.image_index][self.direction]):
             self.dest_rect_index = 0
             if self.attacking:
