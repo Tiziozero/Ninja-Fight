@@ -75,41 +75,27 @@ class Player(pygame.sprite.Sprite):
         self.player_id = entity_id
         self.ground_group = ground_group
         print(len(self.ground_group))
-
+        
+        # Image Bank
         self.image_bank = image_bank
 
-        # Textures and Rect
-        """
-        self.images_dirctory_path_relative_to_main_file = img_dir_path
-        self.images = {}
-        self.image_rect = {}
-        self.image_dest_offset = 150
-        self.image_size = 200 # may vary
-        self.image_names = ['Attack1', 'Attack2', 'Death', 'Fall', 'Idle', 'Jump', 'Run', 'Take Hit']
-        self.image_indexes = ['Attack1', 'Attack2', 'Death', 'Fall', 'Idle', 'Jump', 'Run', 'Take Hit']
-        self.body_rect = pygame.Rect(0, 0, 0, 0)
-        self.image_dest_rect = {}
-        self.images_lef = {}
-        self.images_right = {}
-        self.image_format = '.png'
-        self.offset = 150
-        """
-        self.image_index = 'Idle'
+        # Rectangles
         self.blit_rect = pygame.Rect(0, 0, self.image_bank.image_size, self.image_bank.image_size)
         self.body_rect = pygame.Rect(0, 0, 50, 50)
         self.rect = pygame.Rect(0,0,0,0)
+
         # Animation Stuff
+        self.image_index = 'Idle'
         self.direction = 0
-        self.clock = 0
-        self.animation_speed = 10
         self.dest_rect_index = 0
+        self.animation_speed = 10
+        self.clock = 0
         self.jumping = False 
         self.attacking = False
         self.font_size = 20
         self.font = pygame.font.Font('fonts/CaskaydiaCoveNerdFont-Regular.ttf', self.font_size)
 
         # Test propeties
-        self.image = None
         self.x_position, self.y_position = 0, 0
         self.velocity = 300
         self.horizontal_velocity = 0
@@ -120,19 +106,6 @@ class Player(pygame.sprite.Sprite):
     def setup(self):
         # self.load_img(self.images_dirctory_path_relative_to_main_file)
         pass
-
-    def load_img(self, path):
-        for name in self.image_bank.image_names:
-            path_to_image = path + name + self.image_bank.image_format 
-
-            image_current = pygame.image.load(path_to_image).convert_alpha()
-
-            self.image_bank.images[name] = [image_current, pygame.transform.flip(image_current, True, False)]
-            self.image_bank.image_rect[name] = self.image_bank.images[name][0].get_rect()
-            self.image_bank.image_dest_rect[name] = [
-                                            [pygame.Rect(self.image_bank.image_size * i, 0, self.image_bank.image_size, self.image_bank.image_size)  for i in range(self.image_bank.image_rect[name].w // self.image_bank.image_size)], # right
-                                            [pygame.Rect(self.image_bank.image_rect[name].w - self.image_bank.image_size - self.image_bank.image_size * i, 0, self.image_bank.image_size, self.image_bank.image_size)  for i in range(self.image_bank.image_rect[name].w // self.image_bank.image_size)]  # left
-                                            ]
 
     def move(self, event):
         if not self.attacking:
@@ -226,6 +199,7 @@ class Player(pygame.sprite.Sprite):
         # checks if frame is less than 8 (needs optimisation for all animation lengths)
         self.dest_rect_index += dt * self.animation_speed 
         # print(f"{int(self.dest_rect_index)}, {str(len(self.image_dest_rect)): <5}, {self.image_index}, ")
+        debug(f"{str(int(self.dest_rect_index)): <3}, {str(int(len(self.image_bank.image_dest_rect[self.image_index][self.direction])))}")
         if self.dest_rect_index >= len(self.image_bank.image_dest_rect[self.image_index][self.direction]):
             self.dest_rect_index = 0
             if self.attacking:
