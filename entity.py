@@ -2,31 +2,26 @@ import pygame, os, sys, time, math
 from debug import debug, print_debug
 
 
-class Images:
+class Image_Bank:
     def __init__(self, path):
         print("image for path", path)
-        self.images = {}
+        self.images = {} #contains actual images
         self.images_dirctory_path_relative_to_main_file = path
-        self.images = {}
-        self.image_rect = {}
-        self.image_dest_offset = 150
+        self.image_rect = {} # contains images rect
+        self.image_dest_offset = 150 # total offset for body rect
         self.image_size = 200 # may vary
         self.image_names = ['Attack1', 'Attack2', 'Death', 'Fall', 'Idle', 'Jump', 'Run', 'Take Hit']
         self.image_indexes = ['Attack1', 'Attack2', 'Death', 'Fall', 'Idle', 'Jump', 'Run', 'Take Hit']
-        self.body_rect = pygame.Rect(0, 0, 0, 0)
-        self.image_dest_rect = {}
-        self.images_lef = {}
-        self.images_right = {}
-        self.image_index = 'Idle'
-        self.image_format = '.png'
-        self.blit_rect = pygame.Rect(0, 0, self.image_size, self.image_size)
-        self.body_rect = pygame.Rect(0, 0, 50, 50)
-        self.rect = pygame.Rect(0,0,0,0)
-        self.offset = 150
+        self.image_dest_rect = {} # image destitanion rects for blitting
+        self.images_lef = {} # left images
+        self.images_right = {} # right images
+        self.image_format = '.png' # image file format
+        # self.dest_rect_index = 0
         self.load_img(path)
 
     def load_img(self, path):
         for name in self.image_names:
+            print(f"loading {name}")
             path_to_image = path + name + self.image_format 
 
             image_current = pygame.image.load(path_to_image).convert_alpha()
@@ -84,6 +79,7 @@ class Player(pygame.sprite.Sprite):
         self.image_bank = image_bank
 
         # Textures and Rect
+        """
         self.images_dirctory_path_relative_to_main_file = img_dir_path
         self.images = {}
         self.image_rect = {}
@@ -95,13 +91,13 @@ class Player(pygame.sprite.Sprite):
         self.image_dest_rect = {}
         self.images_lef = {}
         self.images_right = {}
-        self.image_index = 'Idle'
         self.image_format = '.png'
-        self.blit_rect = pygame.Rect(0, 0, self.image_size, self.image_size)
+        self.offset = 150
+        """
+        self.image_index = 'Idle'
+        self.blit_rect = pygame.Rect(0, 0, self.image_bank.image_size, self.image_bank.image_size)
         self.body_rect = pygame.Rect(0, 0, 50, 50)
         self.rect = pygame.Rect(0,0,0,0)
-        self.offset = 150
-
         # Animation Stuff
         self.direction = 0
         self.clock = 0
@@ -122,19 +118,20 @@ class Player(pygame.sprite.Sprite):
         self.jump_hight = 800
 
     def setup(self):
-        self.load_img(self.images_dirctory_path_relative_to_main_file)
+        # self.load_img(self.images_dirctory_path_relative_to_main_file)
+        pass
 
     def load_img(self, path):
-        for name in self.image_names:
-            path_to_image = path + name + self.image_format 
+        for name in self.image_bank.image_names:
+            path_to_image = path + name + self.image_bank.image_format 
 
             image_current = pygame.image.load(path_to_image).convert_alpha()
 
-            self.images[name] = [image_current, pygame.transform.flip(image_current, True, False)]
-            self.image_rect[name] = self.images[name][0].get_rect()
-            self.image_dest_rect[name] = [
-                                            [pygame.Rect(self.image_size * i, 0, self.image_size, self.image_size)  for i in range(self.image_rect[name].w // self.image_size)], # right
-                                            [pygame.Rect(self.image_rect[name].w - self.image_size - self.image_size * i, 0, self.image_size, self.image_size)  for i in range(self.image_rect[name].w // self.image_size)]  # left
+            self.image_bank.images[name] = [image_current, pygame.transform.flip(image_current, True, False)]
+            self.image_bank.image_rect[name] = self.image_bank.images[name][0].get_rect()
+            self.image_bank.image_dest_rect[name] = [
+                                            [pygame.Rect(self.image_bank.image_size * i, 0, self.image_bank.image_size, self.image_bank.image_size)  for i in range(self.image_bank.image_rect[name].w // self.image_bank.image_size)], # right
+                                            [pygame.Rect(self.image_bank.image_rect[name].w - self.image_bank.image_size - self.image_bank.image_size * i, 0, self.image_bank.image_size, self.image_bank.image_size)  for i in range(self.image_bank.image_rect[name].w // self.image_bank.image_size)]  # left
                                             ]
 
     def move(self, event):
@@ -213,23 +210,23 @@ class Player(pygame.sprite.Sprite):
 
 
     def draw(self, screen):
-        self.blit_rect = pygame.Rect(self.body_rect.x - 75, self.body_rect.y - 75, self.image_size, self.image_size)
-        currentThingy = self.image_dest_rect[self.image_index][self.direction]
+        self.blit_rect = pygame.Rect(self.body_rect.x - 75, self.body_rect.y - 75, self.image_bank.image_size, self.image_bank.image_size)
+        currentThingy = self.image_bank.image_dest_rect[self.image_index][self.direction]
 
         if self.dest_rect_index > len(currentThingy):
             self.dest_rect_index = len(currentThingy)-0.01
         # pygame.draw.rect(screen, (255, 255, 255), self.body_rect)
         screen.blit(
-                    self.images[self.image_index][self.direction], # Imgae ( images, which image, what dirrection )
+                    self.image_bank.images[self.image_index][self.direction], # Imgae ( images, which image, what dirrection )
                     self.blit_rect, # Draw rect ( where to draw )
-                    self.image_dest_rect[self.image_index][self.direction][int(self.dest_rect_index)] # Which tile ( destination rects, for which image, what direction )
+                    self.image_bank.image_dest_rect[self.image_index][self.direction][int(self.dest_rect_index)] # Which tile ( destination rects, for which image, what direction ) ( use of self.image_idex, self.direction and self.dest_rect_index for reasons undefined for now )
                 )
 
     def update_indexes(self, dt):
         # checks if frame is less than 8 (needs optimisation for all animation lengths)
         self.dest_rect_index += dt * self.animation_speed 
         # print(f"{int(self.dest_rect_index)}, {str(len(self.image_dest_rect)): <5}, {self.image_index}, ")
-        if self.dest_rect_index >= len(self.image_dest_rect[self.image_index][self.direction]):
+        if self.dest_rect_index >= len(self.image_bank.image_dest_rect[self.image_index][self.direction]):
             self.dest_rect_index = 0
             if self.attacking:
                 self.attacking = False
@@ -249,6 +246,7 @@ class Player(pygame.sprite.Sprite):
         self.updata_pos(dt, screen)
         self.update_indexes(dt)
         self.def_animation()
+        debug(f"{str(self.image_index): <8}, {str(self.direction): <2}, {str(): <20}")
         
         self.draw(screen)
         

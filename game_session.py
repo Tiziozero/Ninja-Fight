@@ -22,6 +22,7 @@ class Game_Session:
         self.QuitGame = False
         self.screen = screen
         self.rect = (100,100,400,200)
+        self.image_bank = entity.Image_Bank("graphics/sprites/")
         self.draw_sprites = pygame.sprite.Group()
         self.player_group = pygame.sprite.GroupSingle()
         self.ground_group = pygame.sprite.Group()
@@ -35,7 +36,7 @@ class Game_Session:
     def draw(self, dt):
         pass
     def run(self, screen):
-        test_en = entity.Player('00000001', "graphics/sprites/", self.draw_sprites, self.ground_group)
+        test_en = entity.Player('00000001',self.image_bank, "graphics/sprites/", self.draw_sprites, self.ground_group)
         test_en.setup()
         p_time = time.time()
         while not self.QuitGame:
