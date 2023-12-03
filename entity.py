@@ -82,7 +82,7 @@ class Player(pygame.sprite.Sprite):
         # Rectangles
         self.blit_rect = pygame.Rect(0, 0, self.image_bank.image_size, self.image_bank.image_size)
         self.body_rect = pygame.Rect(0, 0, 50, 50)
-        self.rect = pygame.Rect(0,0,0,0)
+        # self.rect = pygame.Rect(0,0,0,0)
 
         # Animation Stuff
         self.image_index = 'Idle'
@@ -124,9 +124,9 @@ class Player(pygame.sprite.Sprite):
                     if not self.jumping:
                         self.vertical_velocity = -self.jump_hight
                     self.dest_rect_index = 0
-                    self.rect.y -= 1
+                    # self.rect.y -= 1
                     self.jumping = True
-                    print("Jump", self.vertical_velocity, self.rect.bottom - 75 )
+                    print("Jump", self.vertical_velocity)
 
             if event.type == pygame.KEYUP:
                 if not self.attacking:
@@ -138,26 +138,51 @@ class Player(pygame.sprite.Sprite):
     def updata_pos(self, dt, screen):
         # Updata Position
         self.vertical_velocity += 2500 * dt 
+        
+        if not self.attacking:
+            self.x_position += self.horizontal_velocity * dt 
 
         # not using pygame spritecollide due to it giving problems like not getting collisions each timeits called maybe due to it being slow or any other reason
-
+        # debug("if ( self.body_rect.top <= floor.rect.top and self.body_rect.bottom >= floor.rect.bottom )")
+        # debug("if ( self.body_rect.top >= floor.rect.top and self.body_rect.bottom <= floor.rect.bottom )")
         for floor in self.ground_group:
-            if self.rect.bottom >= floor.rect.top and self.rect.bottom <= floor.rect.bottom:
-                if self.rect.right >= floor.rect.left and self.rect.right <= floor.rect.right:
+            debug(f"right collision. self top: {str(self.body_rect.top): <4} :: floor top: {str(floor.rect.top): <4}; self.bot: {str(self.body_rect.bottom): <4} :: floor bot: {str(floor.rect.bottom): <4} ")
+            
+            if self.body_rect.bottom >= floor.rect.top and self.body_rect.bottom <= floor.rect.bottom and self.body_rect.top < floor.rect.top:
+                debug(f"bottom collision for recty at {floor.rect.y}")
+                if self.body_rect.right >= floor.rect.left and self.body_rect.left <= floor.rect.right:
                     if self.vertical_velocity >= 0:
-                        self.rect.bottom = floor.rect.top
+                        self.body_rect.bottom = floor.rect.top
                         self.vertical_velocity = 0
                         self.jumping = False
-            if self.rect.top <= floor.rect.bottom and self.rect.top >= floor.rect.top:
-                if self.rect.right >= floor.rect.left and self.rect.right <= floor.rect.right:
+            
+            elif self.body_rect.top <= floor.rect.bottom and self.body_rect.top >= floor.rect.top and self.body_rect.bottom > floor.rect.bottom:
+                debug(f"top collision for recty at {floor.rect.y}")
+                if self.body_rect.right >= floor.rect.left and self.body_rect.right <= floor.rect.right:
                     if self.vertical_velocity <= 0:
-                        self.rect.top = floor.rect.bottom
+                        self.body_rect.top = floor.rect.bottom
                         self.vertical_velocity = 0
+            
+            elif self.body_rect.right > floor.rect.left and self.body_rect.right < floor.rect.right:
+                debug(f"right collision for recty at {floor.rect.y}")
+                if ( self.body_rect.top <= floor.rect.top and self.body_rect.bottom >= floor.rect.bottom ) or ( self.body_rect.top >= floor.rect.top and self.body_rect.bottom <= floor.rect.bottom ):
+                    self.body_rect.right = floor.rect.left
+                    self.x_position = floor.rect.left - 50
 
+            elif self.body_rect.left < floor.rect.right and self.body_rect.left > floor.rect.left:
+                debug(f"left collision for recty at {floor.rect.y}")
+                if ( self.body_rect.top <= floor.rect.top and self.body_rect.bottom >= floor.rect.bottom ) or ( self.body_rect.top >= floor.rect.top and self.body_rect.bottom <= floor.rect.bottom ):
+                    self.body_rect.left = floor.rect.left
+                    self.x_position = floor.rect.right
+
+            # if self.body_rect.top >= floor.rect.top and self.body_rect.bottom <= floor.rect.bottom:
+            # if self.body_rect.top >= floor.rect.top and self.body_rect.bottom <= floor.rect.bottom:
+            # if ( self.body_rect.top <= floor.rect.top and self.body_rect.bottom >= floor.rect.bottom ) or ( self.body_rect.top >= floor.rect.top and self.body_rect.bottom <= floor.rect.bottom ):
+            #     debug(f"ye: {self.body_rect.top} :: {floor.rect.top};{self.body_rect.bottom} :: {floor.rect.bottom} ")
+            #     print(f"ye: {self.body_rect.top} :: {floor.rect.top};{self.body_rect.bottom} :: {floor.rect.bottom} ")
 
 
         if not self.attacking:
-            self.x_position += self.horizontal_velocity * dt 
             self.y_position += self.vertical_velocity * dt 
         self.body_rect.x = int(math.ceil(self.x_position))
         self.body_rect.y = int(self.y_position)
@@ -186,13 +211,13 @@ class Player(pygame.sprite.Sprite):
         self.blit_rect = pygame.Rect(self.body_rect.x - 75, self.body_rect.y - 75, self.image_bank.image_size, self.image_bank.image_size)
         currentThingy = self.image_bank.image_dest_rect[self.image_index][self.direction]
 
-        self.update_indexes(dt)
         self.def_animation()
-        if self.dest_rect_index > len(currentThingy):
-            self.dest_rect_index = len(currentThingy)-0.01
-            print("dest rect index is more than", len(currentThingy))
+        self.update_indexes(dt)
+        # if self.dest_rect_index > len(currentThingy):
+        # self.dest_rect_index = len(currentThingy)-0.01
+        #     print("dest rect index is more than", len(currentThingy))
         pygame.draw.rect(screen, (255, 255, 255), self.body_rect)
-        debug(f"{int(self.dest_rect_index)}")
+        # debug(f"{int(self.dest_rect_index)}")
         try:
             screen.blit(
                         self.image_bank.images[self.image_index][self.direction], # Imgae ( images, which image, what dirrection )
@@ -204,7 +229,7 @@ class Player(pygame.sprite.Sprite):
 
     def update_indexes(self, dt):
         self.dest_rect_index += dt * self.animation_speed 
-        debug(f"{str(int(self.dest_rect_index)): <3}, {str(int(len(self.image_bank.image_dest_rect[self.image_index][self.direction])))}")
+        # debug(f"{str(int(self.dest_rect_index)): <3}, {str(int(len(self.image_bank.image_dest_rect[self.image_index][self.direction])))}")
         if self.dest_rect_index >= len(self.image_bank.image_dest_rect[self.image_index][self.direction]):
             self.dest_rect_index = 0
             if self.attacking:
@@ -220,13 +245,13 @@ class Player(pygame.sprite.Sprite):
                     print("a is pressed", self.horizontal_velocity, self.velocity)
 
     def update(self, screen, dt):
-        self.rect = self.body_rect
+        # self.rect = self.body_rect
         self.clock += dt
         
         self.updata_pos(dt, screen)
-        debug(f"{str(self.image_index): <8}, {str(self.direction): <2}, {str(): <20}")
+        # debug(f"{str(self.image_index): <8}, {str(self.direction): <2}, {str(): <20}")
         
         # self.draw(screen)
         
-        t = (f"{str(self.jumping): <6}, {str(self.vertical_velocity): <20}, {str(self.rect.bottom): <10}")
-        debug(t)
+        # t = (f"{str(self.jumping): <6}, {str(self.vertical_velocity): <20}, {str(self.rect.bottom): <10}")
+        # debug(t)

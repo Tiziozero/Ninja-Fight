@@ -26,12 +26,18 @@ class Game_Session:
         self.draw_sprites = pygame.sprite.Group()
         self.player_group = pygame.sprite.GroupSingle()
         self.ground_group = pygame.sprite.Group()
-        ground_rect = pygame.Rect(0, 390, 800, 10)
-        ground_rect1 = pygame.Rect(350, 300, 3000, 10)
+        ground_rect = pygame.Rect(0, 890, 800, 10)
+        ground_rect1 = pygame.Rect(350, 800, 3000, 10)
+        ground_rect2 = pygame.Rect(400, 700, 250, 100)
+        ground_rect3 = pygame.Rect(0, 600, 200, 10)
         self.floor = Floor(ground_rect, screen, self.ground_group)
         self.floor1 = Floor(ground_rect1, screen, self.ground_group)
+        self.floor2 = Floor(ground_rect2, screen, self.ground_group)
+        self.floor3 = Floor(ground_rect3, screen, self.ground_group)
         self.ground_group.add(self.floor)
         self.ground_group.add(self.floor1)
+        self.ground_group.add(self.floor2)
+        self.ground_group.add(self.floor3)
 
     def draw(self, dt):
         pass
