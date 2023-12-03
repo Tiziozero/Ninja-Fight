@@ -186,20 +186,21 @@ class Player(pygame.sprite.Sprite):
         self.blit_rect = pygame.Rect(self.body_rect.x - 75, self.body_rect.y - 75, self.image_bank.image_size, self.image_bank.image_size)
         currentThingy = self.image_bank.image_dest_rect[self.image_index][self.direction]
 
-        if self.dest_rect_index > len(currentThingy):
-            self.dest_rect_index = len(currentThingy)-0.01
         self.update_indexes(dt)
         self.def_animation()
+        if self.dest_rect_index > len(currentThingy):
+            self.dest_rect_index = len(currentThingy)-0.01
+            print("dest rect index is more than", len(currentThingy))
         pygame.draw.rect(screen, (255, 255, 255), self.body_rect)
         debug(f"{int(self.dest_rect_index)}")
         try:
             screen.blit(
                         self.image_bank.images[self.image_index][self.direction], # Imgae ( images, which image, what dirrection )
                         self.blit_rect, # Draw rect ( where to draw )
-                        self.image_bank.image_dest_rect[self.image_index][self.direction][int(self.dest_rect_index)] # Which tile ( destination rects, for which image, what direction ) ( use of self.image_idex, self.direction and self.dest_rect_index for reasons undefined for now )
+                        self.image_bank.image_dest_rect[self.image_index][self.direction][math.floor(self.dest_rect_index)] # Which tile ( destination rects, for which image, what direction ) ( use of self.image_idex, self.direction and self.dest_rect_index for reasons undefined for now )
                     )
         except IndexError:
-            print(f"fuck u index error bitch {self.dest_rect_index}")
+            print(f"fuck u index error bitch {self.dest_rect_index}, {math.floor(self.dest_rect_index)}")
 
     def update_indexes(self, dt):
         self.dest_rect_index += dt * self.animation_speed 
