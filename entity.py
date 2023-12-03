@@ -182,13 +182,13 @@ class Player(pygame.sprite.Sprite):
                     self.image_index = 'Idle'
 
 
-    def draw(self, screen):
+    def draw(self, screen, dt):
         self.blit_rect = pygame.Rect(self.body_rect.x - 75, self.body_rect.y - 75, self.image_bank.image_size, self.image_bank.image_size)
         currentThingy = self.image_bank.image_dest_rect[self.image_index][self.direction]
 
-        if self.dest_rect_index > len(currentThingy):
-            self.dest_rect_index = len(currentThingy)-0.01
-        # pygame.draw.rect(screen, (255, 255, 255), self.body_rect)
+        self.update_indexes(dt)
+        self.def_animation()
+        pygame.draw.rect(screen, (255, 255, 255), self.body_rect)
         screen.blit(
                     self.image_bank.images[self.image_index][self.direction], # Imgae ( images, which image, what dirrection )
                     self.blit_rect, # Draw rect ( where to draw )
@@ -196,9 +196,7 @@ class Player(pygame.sprite.Sprite):
                 )
 
     def update_indexes(self, dt):
-        # checks if frame is less than 8 (needs optimisation for all animation lengths)
         self.dest_rect_index += dt * self.animation_speed 
-        # print(f"{int(self.dest_rect_index)}, {str(len(self.image_dest_rect)): <5}, {self.image_index}, ")
         debug(f"{str(int(self.dest_rect_index)): <3}, {str(int(len(self.image_bank.image_dest_rect[self.image_index][self.direction])))}")
         if self.dest_rect_index >= len(self.image_bank.image_dest_rect[self.image_index][self.direction]):
             self.dest_rect_index = 0
@@ -213,16 +211,15 @@ class Player(pygame.sprite.Sprite):
                 if keys[pygame.K_a]:
                     self.horizontal_velocity -= self.velocity
                     print("a is pressed", self.horizontal_velocity, self.velocity)
+
     def update(self, screen, dt):
         self.rect = self.body_rect
         self.clock += dt
         
         self.updata_pos(dt, screen)
-        self.update_indexes(dt)
-        self.def_animation()
         debug(f"{str(self.image_index): <8}, {str(self.direction): <2}, {str(): <20}")
         
-        self.draw(screen)
+        # self.draw(screen)
         
         t = (f"{str(self.jumping): <6}, {str(self.vertical_velocity): <20}, {str(self.rect.bottom): <10}")
         debug(t)

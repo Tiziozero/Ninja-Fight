@@ -55,8 +55,10 @@ class Game_Session:
 
             screen.fill((0,0,0))
             # self.floor.draw()
-            self.ground_group.draw(screen)
             test_en.update(screen, dt)
+            self.ground_group.draw(self.screen)
+            test_en.draw(screen, dt)
+            # self.player_group.draw(screen)
             print_debug()
 
             pygame.display.flip()
