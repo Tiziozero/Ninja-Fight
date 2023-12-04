@@ -185,6 +185,7 @@ class Player(pygame.sprite.Sprite):
                 if event.key == pygame.K_j:
                     self.horizontal_velocity = 0
                     self.attacking = True
+                    self.dest_rect_index = 0
                     self.image_index = 'Attack1'
                 if event.key == pygame.K_a:
                     self.horizontal_velocity -= self.velocity
