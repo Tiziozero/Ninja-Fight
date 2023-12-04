@@ -4,7 +4,7 @@ import debug
 class Game:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN)
+        self.screen = pygame.display.set_mode((1200, 600))
         debug.screen = self.screen
         print("Game created")
 

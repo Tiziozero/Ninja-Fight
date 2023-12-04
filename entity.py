@@ -37,36 +37,108 @@ class Image_Bank:
 class Entity(pygame.sprite.Sprite):
     def __init__(self, entity_id, image_bank, img_dir_path, groups):
         super().__init__(groups)
-        self.id = entity_id
-        self.images = {}
-        self.mov = None
-        self.image = None
-        self.offset = 0
-        self.x_pos, self.y_pos = 0, 0
-        self.load_img(img_dir_path)
+        # Player ID
+        self.player_id = entity_id
+        self.ground_group = ground_group
+        print(len(self.ground_group))
+        
+        # Image Bank
+        self.image_bank = image_bank
+
+        # Rectangles
+        self.blit_rect = pygame.Rect(0, 0, self.image_bank.image_size, self.image_bank.image_size)
+        self.body_rect = pygame.Rect(0, 0, 50, 50)
+        # self.rect = pygame.Rect(0,0,0,0)
+
+        # Animation Stuff
+        self.image_index = 'Idle'
+        self.direction = 0
+        self.dest_rect_index = 0
+        self.animation_speed = 10
+        self.clock = 0
+        self.jumping = False 
+        self.attacking = False
+        self.font_size = 20
+        self.font = pygame.font.Font('fonts/CaskaydiaCoveNerdFont-Regular.ttf', self.font_size)
+
+        # Test propeties
+        self.x_position, self.y_position = 0, 0
+        self.velocity = 300
+        self.horizontal_velocity = 0
+        self.vertical_velocity = 0
+        self.in_air = True
+        self.jump_hight = 800
 
     def load_img(self, path):
         self.image = pygame.image.load(path)
         self.rect = self.image.get_rect()
         print(f"{str(self.id):_<10} rect w: {str(self.rect.w):_<5}, rect h: {str(self.rect.h):_<5}, rect x: {str(self.rect.x):_<5}, rect y: {str(self.rect.y):_<5}")
         self.dest_rect = pygame.Rect(0, 0, self.rect.w//8, self.rect.h)
-    """
-    def draw(self, screen):
-        screen.blit(
-                    self.images[self.image_index][self.direction], # Imgae ( images, which image, what dirrection )
-                    self.blit_rect, # Draw rect ( where to draw )
-                    self.image_dest_rect[self.image_index][self.direction][int(self.dest_rect_index)] # Which tile ( destination rects, for which image, what direction )
-                )
-    """
+
+    def update_pos(self):
+        self.x_position += 1
+        
+
+    def def_animation(self):
+        # Update animation
+        if not self.attacking:
+
+            if self.jumping:
+                self.image_index= 'Jump'
+            if self.vertical_velocity > 0:
+                self.image_index = 'Fall'
+            elif self.vertical_velocity == 0:
+                self.image_index = 'Idle'
+                if self.horizontal_velocity > 0:
+                    self.image_index = 'Run'
+                    self.direction = 0
+                elif self.horizontal_velocity < 0:
+                    self.image_index = 'Run'
+                    self.direction = 1
+                else:
+                    self.image_index = 'Idle'
+
+    def draw(self, screen, dt):
+        self.blit_rect = pygame.Rect(self.body_rect.x - 75, self.body_rect.y - 75, self.image_bank.image_size, self.image_bank.image_size)
+        currentThingy = self.image_bank.image_dest_rect[self.image_index][self.direction]
+
+        self.def_animation()
+        self.update_indexes(dt)
+        # if self.dest_rect_index > len(currentThingy):
+        # self.dest_rect_index = len(currentThingy)-0.01
+        #     print("dest rect index is more than", len(currentThingy))
+        pygame.draw.rect(screen, (255, 255, 255), self.body_rect)
+        # debug(f"{int(self.dest_rect_index)}")
+        try:
+            screen.blit(
+                        self.image_bank.images[self.image_index][self.direction], # Imgae ( images, which image, what dirrection )
+                        self.blit_rect, # Draw rect ( where to draw )
+                        self.image_bank.image_dest_rect[self.image_index][self.direction][math.floor(self.dest_rect_index)] # Which tile ( destination rects, for which image, what direction ) ( use of self.image_idex, self.direction and self.dest_rect_index for reasons undefined for now )
+                    )
+        except IndexError:
+            print(f"fuck u index error bitch {self.dest_rect_index}, {math.floor(self.dest_rect_index)}")
+    def update_indexes(self, dt):
+        self.dest_rect_index += dt * self.animation_speed 
+        # debug(f"{str(int(self.dest_rect_index)): <3}, {str(int(len(self.image_bank.image_dest_rect[self.image_index][self.direction])))}")
+        if self.dest_rect_index >= len(self.image_bank.image_dest_rect[self.image_index][self.direction]):
+            self.dest_rect_index = 0
+            if self.attacking:
+                self.attacking = False
+                self.vertical_velocity = 0
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_d]:
+                    self.horizontal_velocity += self.velocity
+                    print("d is pressed", self.horizontal_velocity, self.velocity)
+                
+                if keys[pygame.K_a]:
+                    self.horizontal_velocity -= self.velocity
+                    print("a is pressed", self.horizontal_velocity, self.velocity)
+
     def update(self, screen, dt):
-        # self.draw(screen)
-        #self.dest_rect.x += self.dest_rect.w
-        self.x_pos += dt
-        self.dest_rect.x = self.x_pos
-        print(f"dt: {str(dt):_<50}; x position: {str(self.x_pos):_<50}")
-        if self.dest_rect.x >= self.rect.w:
-            self.dest_rect.x = 0
-            self.x_pos
+        # self.rect = self.body_rect
+        self.clock += dt
+        
+        self.updata_pos(dt, screen)
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, entity_id, image_bank, img_dir_path, groups, ground_group):
@@ -216,7 +288,7 @@ class Player(pygame.sprite.Sprite):
         # if self.dest_rect_index > len(currentThingy):
         # self.dest_rect_index = len(currentThingy)-0.01
         #     print("dest rect index is more than", len(currentThingy))
-        pygame.draw.rect(screen, (255, 255, 255), self.body_rect)
+        # pygame.draw.rect(screen, (255, 255, 255), self.body_rect)
         # debug(f"{int(self.dest_rect_index)}")
         try:
             screen.blit(
