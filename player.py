@@ -43,6 +43,20 @@ class Player(Entity):
         debug(str(self.dest_rect_index))
         t = f"attacking: {str(self.attacking): <10}; dest rect index: {str(int(self.dest_rect_index)): <10}; is attacking: {str(self.is_attacking): <10}; attack can damage: {str(self.attack_can_damage): <10}"
         debug(t)
+        # Player will attack if:
+        #     - he is attacking
+        #     - int dest rect is 4
+        #     - is attacking is True
+        #     - attack can damage is True
+        # 
+        # In here i check if these conditions are met.
+        # If they are, i set is_attacking to true so that
+        #     - in the attacking function hte player can check collisions with sprites in entity group
+        #     - damage if conditions are met
+        # the attcking function will be called after 'update_index'
+        # is_attacking should be true only for one loop and onlu between 'ipdate+index' and 'attacking'
+        # 'attacking' is called 'attacked' for now
+        # -- should update is_attacking in 'attacking', not here
         if self.attacking and int(self.dest_rect_index) == 4 and self.is_attacking == False and self.attack_can_damage == True:
             print("attacking")
             self.attack_can_damage = False
