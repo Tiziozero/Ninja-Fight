@@ -16,12 +16,12 @@ class Image_Bank:
         self.images_lef = {} # left images
         self.images_right = {} # right images
         self.image_format = '.png' # image file format
-        # self.dest_rect_index = 0
         self.load_img(path)
 
     def load_img(self, path):
+        print(f"loading images for {path}...")
         for name in self.image_names:
-            print(f"loading {name}")
+            print(f"    loading {name}")
             path_to_image = path + name + self.image_format 
 
             image_current = pygame.image.load(path_to_image).convert_alpha()
@@ -35,13 +35,20 @@ class Image_Bank:
 
 
 class Entity(pygame.sprite.Sprite):
-    def __init__(self, entity_id, image_bank, groups, ground_group):
-        super().__init__(groups)
+    def __init__(self, entity_id, image_bank, groups):
+        super().__init__()
         # Player ID
         self.entity_id = entity_id
-        self.ground_group = ground_group
-        print(len(self.ground_group))
+
+        # Entity Groups
+        self.ground_group = groups["ground"]
+        self.groups = groups
         
+        # Entity properties
+        self.life_points = 10000
+        self.attacking_points = 750
+        self.attacking_damage = False
+
         # Image Bank
         self.image_bank = image_bank
 
@@ -54,12 +61,17 @@ class Entity(pygame.sprite.Sprite):
         self.image_index = 'Idle'
         self.direction = 0
         self.dest_rect_index = 0
-        self.animation_speed = 10
+        self.animation_speed = 20
         self.clock = 0
-        self.attacking = False
         self.jumping = False
+
+        # Attack
+        self.is_attacking = False
+        self.attacking = False
         self.temp_attac_rect_surf = pygame.Surface((125, 75))
         self.attack_range_rect = self.temp_attac_rect_surf.get_rect()
+        self.attacking_damage = False
+        self.attack_can_damage= True
 
         # Test propeties
         self.x_position, self.y_position = 0, 0
@@ -75,17 +87,16 @@ class Entity(pygame.sprite.Sprite):
 
 
     def updata_pos(self, dt, screen):
-        # Updata Position
+        # Updata vertical y velocity due to gravity
         self.vertical_velocity += 2500 * dt 
         
+        # Update entity's x position due to entity moving
         if not self.attacking:
             self.x_position += self.horizontal_velocity * dt 
 
+        # Entities collisions with floor
         for floor in self.ground_group:
-            # debug(f"right collision. self top: {str(self.body_rect.top): <4} :: floor top: {str(floor.rect.top): <4}; self.bot: {str(self.body_rect.bottom): <4} :: floor bot: {str(floor.rect.bottom): <4} ")
-            
             if self.body_rect.bottom >= floor.rect.top and self.body_rect.bottom <= floor.rect.bottom and self.body_rect.top < floor.rect.top:
-                # debug(f"bottom collision for recty at {floor.rect.y}")
                 if self.body_rect.right >= floor.rect.left and self.body_rect.left <= floor.rect.right:
                     if self.vertical_velocity >= 0:
                         self.body_rect.bottom = floor.rect.top
@@ -93,44 +104,47 @@ class Entity(pygame.sprite.Sprite):
                         self.jumping = False
             
             elif self.body_rect.top <= floor.rect.bottom and self.body_rect.top >= floor.rect.top and self.body_rect.bottom > floor.rect.bottom:
-                # debug(f"top collision for recty at {floor.rect.y}")
                 if self.body_rect.right >= floor.rect.left and self.body_rect.right <= floor.rect.right:
                     if self.vertical_velocity <= 0:
                         self.body_rect.top = floor.rect.bottom
                         self.vertical_velocity = 0
             
             elif self.body_rect.right > floor.rect.left and self.body_rect.right < floor.rect.right:
-                # debug(f"right collision for recty at {floor.rect.y}")
                 if ( self.body_rect.top <= floor.rect.top and self.body_rect.bottom >= floor.rect.bottom ) or ( self.body_rect.top >= floor.rect.top and self.body_rect.bottom <= floor.rect.bottom ):
                     self.body_rect.right = floor.rect.left
                     self.x_position = floor.rect.left - 50
 
             elif self.body_rect.left < floor.rect.right and self.body_rect.left > floor.rect.left:
-                # debug(f"left collision for recty at {floor.rect.y}")
                 if ( self.body_rect.top <= floor.rect.top and self.body_rect.bottom >= floor.rect.bottom ) or ( self.body_rect.top >= floor.rect.top and self.body_rect.bottom <= floor.rect.bottom ):
                     self.body_rect.left = floor.rect.left
                     self.x_position = floor.rect.right
 
 
+        # Update entity's vertivcal position if not attacking cuz it's cool 
         if not self.attacking:
             self.y_position += self.vertical_velocity * dt 
         self.body_rect.x = int(math.ceil(self.x_position))
         self.body_rect.y = int(self.y_position)
 
+    def attacked(self):
+        if self.is_attacking:
+            print(self.groups["entity"])
+            print(self.dest_rect_index)
+            for entity in self.groups["entity"]:
+                print(entity.entity_id)
+
     def def_animation(self):
         # Update animation
         if not self.attacking:
-
+            # Update entity's animation index depending on its velocity vertical and horizontal
             if self.horizontal_velocity > 0:
                 self.image_index = 'Run'
                 self.direction = 0
             elif self.horizontal_velocity < 0:
                 self.image_index = 'Run'
                 self.direction = 1
-
             if self.jumping:
                 self.image_index= 'Jump'
-            
             if self.vertical_velocity > 0:
                 self.image_index = 'Fall'
             elif self.vertical_velocity == 0 and self.horizontal_velocity == 0:
@@ -138,16 +152,23 @@ class Entity(pygame.sprite.Sprite):
 
 
     def draw(self, screen, dt):
+        # Update blit rect
         self.blit_rect = pygame.Rect(self.body_rect.x - 75, self.body_rect.y - 75, self.image_bank.image_size, self.image_bank.image_size)
+        # Update attack range rect
         self.attack_range_rect.y = self.body_rect.top - 25
+
         if self.direction == 0:
             self.attack_range_rect.left = self.body_rect.left
         else:
             self.attack_range_rect.right = self.body_rect.right
+        
+        # Update animation index and dest rect image
         self.def_animation()
         self.update_indexes(dt)
+        
+        # Try to draw and  catch potential errors
         try:
-            screen.blit(self.temp_attac_rect_surf, self.attack_range_rect)
+            pygame.draw.rect(screen, (0, 0, 0), self.attack_range_rect, 2)
 
             screen.blit(
                         self.image_bank.images[self.image_index][self.direction], # Imgae ( images, which image, what dirrection )
@@ -155,20 +176,24 @@ class Entity(pygame.sprite.Sprite):
                         self.image_bank.image_dest_rect[self.image_index][self.direction][math.floor(self.dest_rect_index)] # Which tile ( destination rects, for which image, what direction ) ( use of self.image_idex, self.direction and self.dest_rect_index for reasons undefined for now )
                     )
         except IndexError:
-            print(f"fuck u index error bitch {self.dest_rect_index}, {math.floor(self.dest_rect_index)}")
+            print(f"index error: -> {self.dest_rect_index}, {math.floor(self.dest_rect_index)}")
+        except:
+            print("Unkown error!")
 
     def update_indexes(self, dt):
+        # Update dest rect index
         self.dest_rect_index += dt * self.animation_speed 
-        # debug(f"{str(int(self.dest_rect_index)): <3}, {str(int(len(self.image_bank.image_dest_rect[self.image_index][self.direction])))}")
         if self.dest_rect_index >= len(self.image_bank.image_dest_rect[self.image_index][self.direction]):
             self.dest_rect_index = 0
             if self.attacking:
                 self.attacking = False
                 self.vertical_velocity = 0
 
+
     def update(self, screen, dt):
-        # self.rect = self.body_rect
+        # Update entity
         self.clock += dt
-        
         self.updata_pos(dt, screen)
+        self.attacked()
+        if self.is_attacking: print("is attacking")
 

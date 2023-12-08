@@ -4,8 +4,11 @@ from debug import debug, print_debug
 
 
 class Player(Entity):
-    def __init__(self, entity_id, image_bank, img_dir_path, groups, ground_group):
-        super().__init__(entity_id, image_bank, groups, ground_group)
+    def __init__(self, entity_id, image_bank, groups):
+        super().__init__(entity_id, image_bank, groups)
+        self.entity_group = groups["entity"]
+        self.is_attacking = False
+        self.attack_can_damage = True
     def move(self, event):
         if not self.attacking:
             if event.type == pygame.KEYDOWN:
@@ -37,10 +40,19 @@ class Player(Entity):
     def update_indexes(self, dt):
         self.dest_rect_index += dt * self.animation_speed 
         # debug(f"{str(int(self.dest_rect_index)): <3}, {str(int(len(self.image_bank.image_dest_rect[self.image_index][self.direction])))}")
+        debug(str(self.dest_rect_index))
+        t = f"attacking: {str(self.attacking): <10}; dest rect index: {str(int(self.dest_rect_index)): <10}; is attacking: {str(self.is_attacking): <10}; attack can damage: {str(self.attack_can_damage): <10}"
+        debug(t)
+        if self.attacking and int(self.dest_rect_index) == 4 and self.is_attacking == False and self.attack_can_damage == True:
+            print("attacking")
+            self.attack_can_damage = False
+            self.is_attacking = True
+        else:
+            self.is_attacking = False
         if self.dest_rect_index >= len(self.image_bank.image_dest_rect[self.image_index][self.direction]):
             self.dest_rect_index = 0
             if self.attacking:
-                self.attacking = False
+                # for entity in self.entity_group:
                 self.vertical_velocity = 0
                 keys = pygame.key.get_pressed()
                 if keys[pygame.K_d]:
@@ -50,5 +62,8 @@ class Player(Entity):
                 if keys[pygame.K_a]:
                     self.horizontal_velocity -= self.velocity
                     print("a is pressed", self.horizontal_velocity, self.velocity)
+                self.attacking = False
+                self.attack_can_damage = True
+                
 
 
