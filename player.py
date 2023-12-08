@@ -1,4 +1,5 @@
 import pygame, os, sys, time, math
+from random import choice
 from entity import Entity
 from debug import debug, print_debug
 
@@ -16,7 +17,11 @@ class Player(Entity):
                     self.horizontal_velocity = 0
                     self.attacking = True
                     self.dest_rect_index = 0
-                    self.image_index = 'Attack1'
+                    
+                    # self.image_index = 'Attack1'
+                    self.image_index = choice(['Attack1', 'Attack2'])
+                    t = f"current index len = {len(self.image_bank.image_dest_rect[self.image_index][self.direction])}"
+                    debug(t)
                 if event.key == pygame.K_a:
                     self.horizontal_velocity -= self.velocity
                     self.dest_rect_index = 0
@@ -40,8 +45,10 @@ class Player(Entity):
     def update_indexes(self, dt):
         self.dest_rect_index += dt * self.animation_speed 
         # debug(f"{str(int(self.dest_rect_index)): <3}, {str(int(len(self.image_bank.image_dest_rect[self.image_index][self.direction])))}")
-        debug(str(self.dest_rect_index))
-        t = f"attacking: {str(self.attacking): <10}; dest rect index: {str(int(self.dest_rect_index)): <10}; is attacking: {str(self.is_attacking): <10}; attack can damage: {str(self.attack_can_damage): <10}"
+        # debug(str(self.dest_rect_index))
+        t = f"current index len; {len(self.image_bank.image_dest_rect[self.image_index][self.direction])}, image index: {self.image_index}"
+        debug(t)
+        # t = f"attacking: {str(self.attacking): <10}; dest rect index: {str(int(self.dest_rect_index)): <10}; is attacking: {str(self.is_attacking): <10}; attack can damage: {str(self.attack_can_damage): <10}"
         # debug(t)
         # Player will attack if:
         #     - he is attacking

@@ -49,13 +49,13 @@ class Entity(pygame.sprite.Sprite):
         self.attack_points = 750
         self.attacking_damage = False
         self.image = pygame.Surface((200,200))
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect(center=(200, 0))
         # Image Bank
         self.image_bank = image_bank
 
         # Rectangles
-        self.blit_rect = pygame.Rect(0, 0, self.image_bank.image_size, self.image_bank.image_size)
-        self.body_rect = pygame.Rect(0, 0, 50, 50)
+        self.blit_rect = pygame.Rect(200, 0, self.image_bank.image_size, self.image_bank.image_size)
+        self.body_rect = pygame.Rect(200, 0, 50, 50)
         # self.rect = pygame.Rect(0,0,0,0)
 
         # Animation Stuff
@@ -132,9 +132,16 @@ class Entity(pygame.sprite.Sprite):
             print(self.groups["entity"])
             print(self.dest_rect_index)
             for entity in self.groups["entity"]:
+                # Checks if entity isn't itself
                 if entity.entity_id != self.entity_id:
-                    print(entity.entity_id)
-                    entity.attacked(self.attack_points, 0.5)
+                    # Checks of attack_range_rect's sides are inside entity's body_rect
+                    if ( entity.body_rect.right >= self.attack_range_rect.left and entity.body_rect.left <= self.attack_range_rect.left ) or ( entity.body_rect.right >= self.attack_range_rect.right and entity.body_rect.left <= self.attack_range_rect.right ):
+                        # Checks of attack_range_rect's top or bottom  are inside entity's body_rect
+                        if ( self.body_rect.top <= entity.body_rect.bottom and self.body_rect.top >= entity.body_rect.top ) or ( self.body_rect.bottom <= entity.body_rect.bottom and self.body_rect.bottom >= entity.body_rect.top ):
+                            # If yes then inflict damage
+                            print("attack")
+                            print(entity.entity_id)
+                            entity.attacked(self.attack_points, 0.5)
                 else:
                     pass
             self.is_attacking = False
@@ -193,6 +200,7 @@ class Entity(pygame.sprite.Sprite):
             print("Unkown error!")
 
     def update_indexes(self, dt):
+        self.x_position = 200
         # Update dest rect index
         self.dest_rect_index += dt * self.animation_speed 
         if self.dest_rect_index >= len(self.image_bank.image_dest_rect[self.image_index][self.direction]):
