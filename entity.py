@@ -46,9 +46,10 @@ class Entity(pygame.sprite.Sprite):
         
         # Entity properties
         self.life_points = 10000
-        self.attacking_points = 750
+        self.attack_points = 750
         self.attacking_damage = False
-
+        self.image = pygame.Surface((200,200))
+        self.rect = self.image.get_rect()
         # Image Bank
         self.image_bank = image_bank
 
@@ -126,12 +127,21 @@ class Entity(pygame.sprite.Sprite):
         self.body_rect.x = int(math.ceil(self.x_position))
         self.body_rect.y = int(self.y_position)
 
-    def attacked(self):
+    def attack(self):
         if self.is_attacking:
             print(self.groups["entity"])
             print(self.dest_rect_index)
             for entity in self.groups["entity"]:
-                print(entity.entity_id)
+                if entity.entity_id != self.entity_id:
+                    print(entity.entity_id)
+                    entity.attacked(self.attack_points, 0.5)
+                else:
+                    pass
+            self.is_attacking = False
+
+    def attacked(self, attack_points, percentage_extra):
+        self.life_points -= (attack_points + attack_points * percentage_extra)
+
 
     def def_animation(self):
         # Update animation
@@ -152,6 +162,8 @@ class Entity(pygame.sprite.Sprite):
 
 
     def draw(self, screen, dt):
+        t = f"{self.entity_id}: {str(self.life_points)}"
+        debug(t)
         # Update blit rect
         self.blit_rect = pygame.Rect(self.body_rect.x - 75, self.body_rect.y - 75, self.image_bank.image_size, self.image_bank.image_size)
         # Update attack range rect
@@ -170,11 +182,11 @@ class Entity(pygame.sprite.Sprite):
         try:
             pygame.draw.rect(screen, (0, 0, 0), self.attack_range_rect, 2)
 
-            screen.blit(
-                        self.image_bank.images[self.image_index][self.direction], # Imgae ( images, which image, what dirrection )
-                        self.blit_rect, # Draw rect ( where to draw )
-                        self.image_bank.image_dest_rect[self.image_index][self.direction][math.floor(self.dest_rect_index)] # Which tile ( destination rects, for which image, what direction ) ( use of self.image_idex, self.direction and self.dest_rect_index for reasons undefined for now )
-                    )
+            # screen.blit(
+            #             self.image_bank.images[self.image_index][self.direction], # Imgae ( images, which image, what dirrection )
+            #             self.blit_rect, # Draw rect ( where to draw )
+            #             self.image_bank.image_dest_rect[self.image_index][self.direction][math.floor(self.dest_rect_index)] # Which tile ( destination rects, for which image, what direction ) ( use of self.image_idex, self.direction and self.dest_rect_index for reasons undefined for now )
+            #         )
         except IndexError:
             print(f"index error: -> {self.dest_rect_index}, {math.floor(self.dest_rect_index)}")
         except:
@@ -194,6 +206,13 @@ class Entity(pygame.sprite.Sprite):
         # Update entity
         self.clock += dt
         self.updata_pos(dt, screen)
-        self.attacked()
+        self.draw(screen, dt)
+        self.image = self.image_bank.images[self.image_index][self.direction].subsurface(self.image_bank.image_dest_rect[self.image_index][self.direction][math.floor(self.dest_rect_index)])
+        self.rect = self.blit_rect
+
+        self.attack()
+        if self.life_points <= 0:
+            print(f"{self.entity_id} died. l bozo")
+            self.kill()
         if self.is_attacking: print("is attacking")
 

@@ -84,13 +84,14 @@ class Game_Session:
             screen.blit(self.bg, self.bg_rect, self.dest_rect)
 
             # Update sprites
-            test_en.update(screen, dt)
-            test_enemy_1.update(screen, dt)
+            # test_en.update(screen, dt)
+            # test_enemy_1.update(screen, dt)
 
             # Draw sprites
-            test_en.draw(screen, dt)
-            test_enemy_1.draw(screen, dt)
-
+            # test_en.draw(screen, dt)
+            # test_enemy_1.draw(screen, dt)
+            self.entity_group.update(self.screen, dt)
+            self.entity_group.draw(self.screen)
             # Display to screen debug info
             print_debug()
 
