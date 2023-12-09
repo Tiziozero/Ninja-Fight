@@ -43,6 +43,7 @@ class Entity(pygame.sprite.Sprite):
         # Entity Groups
         self.ground_group = groups["ground"]
         self.groups = groups
+        self.entity_group = groups["entity"]
         
         # Entity properties
         self.life_points = 10000
@@ -72,14 +73,15 @@ class Entity(pygame.sprite.Sprite):
         self.temp_attac_rect_surf = pygame.Surface((125, 75))
         self.attack_range_rect = self.temp_attac_rect_surf.get_rect()
         self.attacking_damage = False
-        self.attack_can_damage= True
+        self.is_attacking = False
+        self.attack_can_damage = True
 
         # Test propeties
         self.x_position, self.y_position = 0, 0
         self.velocity = 300
         self.horizontal_velocity = 0
         self.vertical_velocity = 0
-        self.in_air = True
+        # self.in_air = True
         self.jump_hight = 800
         print(f"Created entity: {self.entity_id}")
 
@@ -147,6 +149,8 @@ class Entity(pygame.sprite.Sprite):
             self.is_attacking = False
 
     def attacked(self, attack_points, percentage_extra):
+        print("damage: ", end="")
+        print(attack_points, percentage_extra, attack_points*percentage_extra, attack_points + attack_points*percentage_extra)
         self.life_points -= (attack_points + attack_points * percentage_extra)
 
 
@@ -200,14 +204,46 @@ class Entity(pygame.sprite.Sprite):
             print("Unkown error!")
 
     def update_indexes(self, dt):
-        self.x_position = 200
-        # Update dest rect index
         self.dest_rect_index += dt * self.animation_speed 
+        # debug(f"{str(int(self.dest_rect_index)): <3}, {str(int(len(self.image_bank.image_dest_rect[self.image_index][self.direction])))}")
+        # debug(str(self.dest_rect_index))
+        t = f"current index len; {len(self.image_bank.image_dest_rect[self.image_index][self.direction])}, image index: {self.image_index}"
+        debug(t)
+        # t = f"attacking: {str(self.attacking): <10}; dest rect index: {str(int(self.dest_rect_index)): <10}; is attacking: {str(self.is_attacking): <10}; attack can damage: {str(self.attack_can_damage): <10}"
+        # debug(t)
+        # Player will attack if:
+        #     - he is attacking
+        #     - int dest rect is 4
+        #     - is attacking is True
+        #     - attack can damage is True
+        # 
+        # In here i check if these conditions are met.
+        # If they are, i set is_attacking to true so that
+        #     - in the attacking function hte player can check collisions with sprites in entity group
+        #     - damage if conditions are met
+        # the attcking function will be called after 'update_index'
+        # is_attacking should be true only for one loop and onlu between 'ipdate+index' and 'attacking'
+        # 'attacking' is called 'attacked' for now
+        if self.attacking and int(self.dest_rect_index) == 4 and self.is_attacking == False and self.attack_can_damage:
+            print("attacking")
+            self.attack_can_damage = False
+            self.is_attacking = True
+
         if self.dest_rect_index >= len(self.image_bank.image_dest_rect[self.image_index][self.direction]):
             self.dest_rect_index = 0
             if self.attacking:
-                self.attacking = False
+                # for entity in self.entity_group:
                 self.vertical_velocity = 0
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_d]:
+                    self.horizontal_velocity += self.velocity
+                    print("d is pressed", self.horizontal_velocity, self.velocity)
+                
+                if keys[pygame.K_a]:
+                    self.horizontal_velocity -= self.velocity
+                    print("a is pressed", self.horizontal_velocity, self.velocity)
+                self.attacking = False
+                self.attack_can_damage = True
 
 
     def update(self, screen, dt):
@@ -224,3 +260,35 @@ class Entity(pygame.sprite.Sprite):
             self.kill()
         if self.is_attacking: print("is attacking")
 
+
+class Bullet(pygame.sprite.Sprite):
+    def __init__(self, entity_id, groups, x, y, velocity, attack_points = 1000, buffs = [0.5, 0.2, 0.2]):
+        super().__init__()
+        self.entity_id = entity_id
+        self.groups = groups
+        self.image = pygame.Surface((10, 10))
+        self.image.fill((255,255,255))
+        self.rect = self.image.get_rect(center=(x, y))
+        self.velocity = velocity
+        self.startcoords = (x, y)
+        self.attack_points = attack_points
+        self.buffs = 0
+        for buff in buffs: self.buffs += buff
+    def assoult_entity(self):
+        # for entity in self.groups["entity"]:
+        collisions = pygame.sprite.spritecollide(self, self.groups["entity"], False)
+        for entity in collisions:
+            if entity.entity_id != self.entity_id:
+                print(entity.entity_id)
+                print(f"-- damage: {self.attack_points + self.attack_points*self.buffs}")
+                entity.attacked(self.attack_points, self.buffs)
+                # entity.life_points -= self.attack_points * self.buffs
+                self.kill()
+    def update(self, screen,  dt):
+        self.rect.x += self.velocity * dt
+        self.assoult_entity()
+        t = abs(self.startcoords[0] - abs(self.rect.centerx))
+        debug(f"updatig bullet; {str( str(self.rect.x)): <30}, {str(t)}")
+        if t >= 3000:
+            print("bullet killed")
+            self.kill()

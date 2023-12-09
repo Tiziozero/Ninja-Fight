@@ -1,6 +1,6 @@
 import pygame, os, sys, time, math
 from random import choice
-from entity import Entity
+from entity import Entity, Bullet
 from debug import debug, print_debug
 
 
@@ -20,8 +20,23 @@ class Player(Entity):
                     
                     # self.image_index = 'Attack1'
                     self.image_index = choice(['Attack1', 'Attack2'])
-                    t = f"current index len = {len(self.image_bank.image_dest_rect[self.image_index][self.direction])}"
-                    debug(t)
+                if event.key == pygame.K_k:
+                    self.horizontal_velocity = 0
+                    self.attacking = True
+                    self.dest_rect_index = 0
+                    
+                    # self.image_index = 'Attack1'
+                    self.image_index = choice(['Attack1', 'Attack2'])
+                    b_vel = 3000
+                    if self.direction == 0:
+                        print("right")
+                    elif self.direction == 1:
+                        print("left")
+                        b_vel *= -1
+                    bullet = Bullet(self.entity_id, self.groups, self.body_rect.centerx, self.body_rect.centery, b_vel)
+                    # self.groups["bullets"].add(bullet)
+                    self.groups["draw"].add(bullet)
+                    self.groups["all"].add(bullet)
                 if event.key == pygame.K_a:
                     self.horizontal_velocity -= self.velocity
                     self.dest_rect_index = 0
@@ -42,6 +57,7 @@ class Player(Entity):
                         self.horizontal_velocity += self.velocity
                     if event.key == pygame.K_d:
                         self.horizontal_velocity -= self.velocity
+    """
     def update_indexes(self, dt):
         self.dest_rect_index += dt * self.animation_speed 
         # debug(f"{str(int(self.dest_rect_index)): <3}, {str(int(len(self.image_bank.image_dest_rect[self.image_index][self.direction])))}")
@@ -86,3 +102,4 @@ class Player(Entity):
                 
 
 
+    """

@@ -30,20 +30,16 @@ class Game_Session:
         self.image_bank = Image_Bank("graphics/sprites/")
 
         # Groups
+        self.all_sprites = pygame.sprite.Group()
         self.draw_sprites = pygame.sprite.Group()
         self.player_group = pygame.sprite.GroupSingle()
         self.ground_group = pygame.sprite.Group()
         self.entity_group = pygame.sprite.Group()
-        self.groups = {"draw": self.draw_sprites, "player": self.player_group, "ground": self.ground_group, "entity": self.entity_group}
+        self.bullets_group = pygame.sprite.Group()
+        self.groups = {"draw": self.draw_sprites, "player": self.player_group, "ground": self.ground_group, "entity": self.entity_group, "all": self.all_sprites, "bullets": self.bullets_group}
 
 
         # Background 
-        # self.bg_index = 2
-        # self.bg = pygame.image.load("graphics/bg.png").convert_alpha()
-        # self.bg = pygame.transform.scale(self.bg, (1200, (600 * 3)))
-        # self.bg_rect = pygame.Rect(0, 0, 1200, 600)
-        # self.bg_rect = self.bg.get_rect()
-        # self.dest_rect = pygame.Rect(0, (self.bg_rect.h // 3) * self.bg_index, self.bg_rect.w, self.bg_rect.h // 3)
         self.bg = pygame.image.load("graphics/bg_1.jpg")
         self.bg = pygame.transform.scale(self.bg, (1200, 600))
         self.bg_rect = self.bg.get_rect()
@@ -64,6 +60,8 @@ class Game_Session:
         test_enemy_1 = Enemy_1('00000002', self.image_bank, self.groups)
         self.entity_group.add(test_en)
         self.entity_group.add(test_enemy_1)
+        self.all_sprites.add(test_en)
+        self.all_sprites.add(test_enemy_1)
         self.draw_sprites.add(test_en)
         self.draw_sprites.add(test_enemy_1)
 
@@ -90,18 +88,9 @@ class Game_Session:
             # screen.blit(self.bg, self.bg_rect, self.dest_rect)
             screen.blit(self.bg, self.bg_rect)
             
-            # -- old method, depricated
-            # Update sprites
-            # test_en.update(screen, dt)
-            # test_enemy_1.update(screen, dt)
-
-            # Draw sprites
-            # test_en.draw(screen, dt)
-            # test_enemy_1.draw(screen, dt)
-            
-            self.entity_group.update(self.screen, dt)
-            # self.entity_group.draw(self.screen)
+            self.all_sprites.update(self.screen, dt)
             self.draw_sprites.draw(self.screen)
+
             # Display to screen debug info
             print_debug()
 
