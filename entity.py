@@ -77,6 +77,11 @@ class Entity(pygame.sprite.Sprite):
         self.is_attacking = False
         self.attack_can_damage = True
         self.attack_index = 0
+        self.entity_group = groups["entity"]
+        self.is_attacking = False
+        self.attack_can_damage = True
+        self.attack_animation_sequence_1 = ['Attack1', 'Attack2']
+        self.attack_animation_sequence_2 = ['Attack1', 'Attack2']
 
         # Test propeties
         self.x_position, self.y_position = 0, 0
@@ -234,16 +239,7 @@ class Entity(pygame.sprite.Sprite):
         if self.dest_rect_index >= len(self.image_bank.image_dest_rect[self.image_index][self.direction]):
             self.dest_rect_index = 0
             if self.attacking:
-                # for entity in self.entity_group:
                 self.vertical_velocity = 0
-                keys = pygame.key.get_pressed()
-                if keys[pygame.K_d]:
-                    self.horizontal_velocity += self.velocity
-                    print("d is pressed", self.horizontal_velocity, self.velocity)
-                
-                if keys[pygame.K_a]:
-                    self.horizontal_velocity -= self.velocity
-                    print("a is pressed", self.horizontal_velocity, self.velocity)
                 self.attacking = False
                 self.attack_can_damage = True
 
