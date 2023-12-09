@@ -5,11 +5,13 @@ from debug import debug, print_debug
 
 
 class Player(Entity):
-    def __init__(self, entity_id, image_bank, groups):
-        super().__init__(entity_id, image_bank, groups)
+    def __init__(self, entity_id, entity_name, player_character,  image_bank, groups):
+        super().__init__(entity_id, entity_name, image_bank, groups)
         self.entity_group = groups["entity"]
         self.is_attacking = False
         self.attack_can_damage = True
+        self.attack_animation_sequence_1 = ['Attack1', 'Attack2']
+        self.attack_animation_sequence_2 = ['Attack1', 'Attack2']
     def move(self, event):
         if not self.attacking:
             if event.type == pygame.KEYDOWN:
@@ -19,15 +21,21 @@ class Player(Entity):
                     self.dest_rect_index = 0
                     
                     # self.image_index = 'Attack1'
-                    self.image_index = choice(['Attack1', 'Attack2'])
+                    self.image_index = self.attack_animation_sequence_1[self.attack_index]
+                    self.attack_index += 1
+                    if self.attack_index >= len(self.attack_animation_sequence_1):
+                        self.attack_index = 0
                 if event.key == pygame.K_k:
                     self.horizontal_velocity = 0
                     self.attacking = True
                     self.dest_rect_index = 0
                     
                     # self.image_index = 'Attack1'
-                    self.image_index = choice(['Attack1', 'Attack2'])
-                    b_vel = 3000
+                    self.image_index = self.attack_animation_sequence_2[self.attack_index]
+                    self.attack_index += 1
+                    if self.attack_index >= len(self.attack_animation_sequence_2):
+                        self.attack_index = 0
+                    b_vel = 1000
                     if self.direction == 0:
                         print("right")
                     elif self.direction == 1:

@@ -50,20 +50,29 @@ class Game_Session:
         self.ground_group.add(self.floor)
         self.draw_sprites.add(self.floor)
 
+    
+    def setup_game_player(self, player_id, player_name, character):
+        self.player_id = player_id
+        self.player_name = player_name
+        self.player_character = character
+        return True
+
+
     def draw(self, dt):
         pass
     def run(self, screen):
         # Game player
-        test_en = Player('00000001',self.image_bank, self.groups)
+        test_en = Player(self.player_id, self.player_name, self.player_character, self.image_bank, self.groups)
         test_en.setup()
         # Test entity enemy
-        test_enemy_1 = Enemy_1('00000002', self.image_bank, self.groups)
+        test_enemy_1 = Enemy_1('32001207', "george",  self.image_bank, self.groups)
         self.entity_group.add(test_en)
         self.entity_group.add(test_enemy_1)
         self.all_sprites.add(test_en)
         self.all_sprites.add(test_enemy_1)
         self.draw_sprites.add(test_en)
         self.draw_sprites.add(test_enemy_1)
+        self.player_group.add(test_en)
 
         # Setup game variables
         p_time = time.time()
@@ -88,7 +97,7 @@ class Game_Session:
             # screen.blit(self.bg, self.bg_rect, self.dest_rect)
             screen.blit(self.bg, self.bg_rect)
             
-            self.all_sprites.update(self.screen, dt)
+            self.all_sprites.update(screen, dt)
             self.draw_sprites.draw(self.screen)
 
             # Display to screen debug info

@@ -35,10 +35,11 @@ class Image_Bank:
 
 
 class Entity(pygame.sprite.Sprite):
-    def __init__(self, entity_id, image_bank, groups):
+    def __init__(self, entity_id, entity_name,  image_bank, groups):
         super().__init__()
         # Player ID
         self.entity_id = entity_id
+        self.entity_name = entity_name
 
         # Entity Groups
         self.ground_group = groups["ground"]
@@ -75,6 +76,7 @@ class Entity(pygame.sprite.Sprite):
         self.attacking_damage = False
         self.is_attacking = False
         self.attack_can_damage = True
+        self.attack_index = 0
 
         # Test propeties
         self.x_position, self.y_position = 0, 0
@@ -89,7 +91,7 @@ class Entity(pygame.sprite.Sprite):
         pass
 
 
-    def updata_pos(self, dt, screen):
+    def updata_pos(self, dt):
         # Updata vertical y velocity due to gravity
         self.vertical_velocity += 2500 * dt 
         
@@ -245,11 +247,14 @@ class Entity(pygame.sprite.Sprite):
                 self.attacking = False
                 self.attack_can_damage = True
 
+    def __entity_specific__(self):
+        debug(f"{self.entity_id}")
 
-    def update(self, screen, dt):
+    def update(self,screen, dt):
+        self.__entity_specific__()
         # Update entity
         self.clock += dt
-        self.updata_pos(dt, screen)
+        self.updata_pos(dt)
         self.draw(screen, dt)
         self.image = self.image_bank.images[self.image_index][self.direction].subsurface(self.image_bank.image_dest_rect[self.image_index][self.direction][math.floor(self.dest_rect_index)])
         self.rect = self.blit_rect
@@ -274,17 +279,50 @@ class Bullet(pygame.sprite.Sprite):
         self.attack_points = attack_points
         self.buffs = 0
         for buff in buffs: self.buffs += buff
+
+    def is_collision(self, rect1, rect2):
+        """
+        Check if two rectangles collide.
+
+        Parameters:
+        - rect1: A tuple or list containing (x1, y1, width1, height1) of the first rectangle.
+        - rect2: A tuple or list containing (x2, y2, width2, height2) of the second rectangle.
+
+        Returns:
+        - True if there is a collision, False otherwise.
+        """
+        x1, y1, width1, height1 = rect1
+        x2, y2, width2, height2 = rect2
+
+        # Calculate the right and bottom coordinates of each rectangle
+        right1 = x1 + width1
+        bottom1 = y1 + height1
+        right2 = x2 + width2
+        bottom2 = y2 + height2
+
+        # Check for overlap on the x-axis and y-axis
+        if x1 < right2 and right1 > x2 and y1 < bottom2 and bottom1 > y2:
+            return True
+        else:
+            return False
     def assoult_entity(self):
         # for entity in self.groups["entity"]:
         collisions = pygame.sprite.spritecollide(self, self.groups["entity"], False)
-        for entity in collisions:
+        # for entity in collisions:
+        for entity in self.groups["entity"]:
             if entity.entity_id != self.entity_id:
-                print(entity.entity_id)
-                print(f"-- damage: {self.attack_points + self.attack_points*self.buffs}")
-                entity.attacked(self.attack_points, self.buffs)
-                # entity.life_points -= self.attack_points * self.buffs
-                self.kill()
-    def update(self, screen,  dt):
+                if self.is_collision(entity.body_rect, self.rect):
+                    print(entity.entity_id)
+                    print(f"-- damage: {self.attack_points + self.attack_points*self.buffs}")
+                    entity.attacked(self.attack_points, self.buffs)
+                    # entity.life_points -= self.attack_points * self.buffs
+                    self.kill()
+
+    def __entity_specific__(self):
+        debug(f"i: {self.entity_id}")
+        pass
+    def update(self, screen, dt):
+        self.__entity_specific__()
         self.rect.x += self.velocity * dt
         self.assoult_entity()
         t = abs(self.startcoords[0] - abs(self.rect.centerx))
