@@ -10,14 +10,14 @@ class Floor(pygame.sprite.Sprite):
         super().__init__()
         # Floor Image, rect and screen to draw to
         self.image = pygame.Surface((rect.w, rect.h))
-        self.image.fill((255,0,0))
+        self.image.fill((0,0,0))
         self.rect = self.image.get_rect()
         self.rect.x = rect.x
         self.rect.y = rect.y
         self.screen = screen
         
-    def draw(self):
-        pygame.draw.rect(self.screen, (255,0,0), self.rect)
+    # def draw(self):
+    #     pygame.draw.rect(self.screen, (255,0,0), self.rect)
 
 class Game_Session:
     def __init__(self, screen):
@@ -30,36 +30,49 @@ class Game_Session:
         self.image_bank = Image_Bank("graphics/sprites/")
 
         # Groups
+        self.all_sprites = pygame.sprite.Group()
         self.draw_sprites = pygame.sprite.Group()
         self.player_group = pygame.sprite.GroupSingle()
         self.ground_group = pygame.sprite.Group()
         self.entity_group = pygame.sprite.Group()
-        self.groups = {"draw": self.draw_sprites, "player": self.player_group, "ground": self.ground_group, "entity": self.entity_group}
+        self.bullets_group = pygame.sprite.Group()
+        self.groups = {"draw": self.draw_sprites, "player": self.player_group, "ground": self.ground_group, "entity": self.entity_group, "all": self.all_sprites, "bullets": self.bullets_group}
 
-        # Game ground
-        ground_rect = pygame.Rect(0, 530, 1200, 70)
-        self.floor = Floor(ground_rect, screen, self.ground_group)
-        self.ground_group.add(self.floor)
 
         # Background 
-        self.bg_index = 2
-        self.bg = pygame.image.load("graphics/bg.png").convert_alpha()
-        self.bg = pygame.transform.scale(self.bg, (1200, (600 * 3)))
-        self.bg_rect = pygame.Rect(0, 0, 1200, 600)
+        self.bg = pygame.image.load("graphics/bg_1.jpg")
+        self.bg = pygame.transform.scale(self.bg, (1200, 600))
         self.bg_rect = self.bg.get_rect()
-        self.dest_rect = pygame.Rect(0, (self.bg_rect.h // 3) * self.bg_index, self.bg_rect.w, self.bg_rect.h // 3)
+
+        # Game ground
+        ground_rect = pygame.Rect(0, 580, 1200, 20)
+        self.floor = Floor(ground_rect, screen, self.ground_group)
+        self.ground_group.add(self.floor)
+        self.draw_sprites.add(self.floor)
+
+    
+    def setup_game_player(self, player_id, player_name, character):
+        self.player_id = player_id
+        self.player_name = player_name
+        self.player_character = character
+        return True
 
 
     def draw(self, dt):
         pass
     def run(self, screen):
         # Game player
-        test_en = Player('00000001',self.image_bank, self.groups)
+        test_en = Player(self.player_id, self.player_name, self.player_character, self.image_bank, self.groups)
         test_en.setup()
         # Test entity enemy
-        test_enemy_1 = Enemy_1('00000002', self.image_bank, self.groups)
+        test_enemy_1 = Enemy_1('32001207', "george",  self.image_bank, self.groups)
         self.entity_group.add(test_en)
         self.entity_group.add(test_enemy_1)
+        self.all_sprites.add(test_en)
+        self.all_sprites.add(test_enemy_1)
+        self.draw_sprites.add(test_en)
+        self.draw_sprites.add(test_enemy_1)
+        self.player_group.add(test_en)
 
         # Setup game variables
         p_time = time.time()
@@ -81,17 +94,12 @@ class Game_Session:
 
             # Update and draw background
             pygame.draw.rect(screen, (0, 0, 255), self.bg_rect)
-            screen.blit(self.bg, self.bg_rect, self.dest_rect)
+            # screen.blit(self.bg, self.bg_rect, self.dest_rect)
+            screen.blit(self.bg, self.bg_rect)
+            
+            self.all_sprites.update(screen, dt)
+            self.draw_sprites.draw(self.screen)
 
-            # Update sprites
-            # test_en.update(screen, dt)
-            # test_enemy_1.update(screen, dt)
-
-            # Draw sprites
-            # test_en.draw(screen, dt)
-            # test_enemy_1.draw(screen, dt)
-            self.entity_group.update(self.screen, dt)
-            self.entity_group.draw(self.screen)
             # Display to screen debug info
             print_debug()
 
