@@ -277,16 +277,6 @@ class Bullet(pygame.sprite.Sprite):
         for buff in buffs: self.buffs += buff
 
     def is_collision(self, rect1, rect2):
-        """
-        Check if two rectangles collide.
-
-        Parameters:
-        - rect1: A tuple or list containing (x1, y1, width1, height1) of the first rectangle.
-        - rect2: A tuple or list containing (x2, y2, width2, height2) of the second rectangle.
-
-        Returns:
-        - True if there is a collision, False otherwise.
-        """
         x1, y1, width1, height1 = rect1
         x2, y2, width2, height2 = rect2
 
