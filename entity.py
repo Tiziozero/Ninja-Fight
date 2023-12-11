@@ -1,5 +1,12 @@
 import pygame, os, sys, time, math
 from debug import debug, print_debug
+from enum import Enum
+
+class attack_types(Enum):
+    meele = 0 
+    short_range = 1
+    long_range = 2
+
 
 
 class Image_Bank:
@@ -135,6 +142,40 @@ class Entity(pygame.sprite.Sprite):
             self.y_position += self.vertical_velocity * dt 
         self.body_rect.x = int(math.ceil(self.x_position))
         self.body_rect.y = int(self.y_position)
+
+
+    def entity_attack_(self, type = 0, extra = None):
+        if type == attack_types.meele:
+            self.horizontal_velocity = 0
+            self.attacking = True
+            self.dest_rect_index = 0
+            
+            # self.image_index = 'Attack1'
+            self.image_index = self.attack_animation_sequence_1[self.attack_index]
+            self.attack_index += 1
+            if self.attack_index >= len(self.attack_animation_sequence_1):
+                self.attack_index = 0
+        elif type == attack_types.long_range:
+            self.horizontal_velocity = 0
+            self.attacking = True
+            self.dest_rect_index = 0
+            
+            # self.image_index = 'Attack1'
+            self.image_index = self.attack_animation_sequence_2[self.attack_index]
+            self.attack_index += 1
+            if self.attack_index >= len(self.attack_animation_sequence_2):
+                self.attack_index = 0
+            b_vel = 1000
+            if self.direction == 0:
+                print("right")
+            elif self.direction == 1:
+                print("left")
+                b_vel *= -1
+            bullet = Bullet(self.entity_id, self.groups, self.body_rect.centerx, self.body_rect.centery, b_vel)
+            # self.groups["bullets"].add(bullet)
+            self.groups["draw"].add(bullet)
+            self.groups["all"].add(bullet)
+
 
     def attack(self):
         if self.is_attacking:
