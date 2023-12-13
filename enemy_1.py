@@ -5,7 +5,7 @@ import math
 
 class Enemy_1(Entity):
     def __init__(self, entity_id, enemy_name,  image_bank, groups):
-        super().__init__(entity_id, enemy_name, image_bank, groups)
+        super().__init__(entity_id, enemy_name, image_bank, groups, blit_rect_offset_y=3)
         self.velocity = 150
 
     def _ai_(self):

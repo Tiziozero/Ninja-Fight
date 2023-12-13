@@ -6,12 +6,13 @@ from debug import debug, print_debug
 
 class Player(Entity):
     def __init__(self, entity_id, entity_name, player_character,  image_bank, groups):
-        super().__init__(entity_id, entity_name, image_bank, groups)
+        super().__init__(entity_id=entity_id, entity_name=entity_name, image_bank=image_bank, groups=groups, blit_rect_offset_x=0, blit_rect_offset_y=3)
         self.entity_group = groups["entity"]
         self.is_attacking = False
         self.attack_can_damage = True
         self.attack_animation_sequence_1 = ['Attack1', 'Attack2']
         self.attack_animation_sequence_2 = ['Attack1', 'Attack2']
+        self.camera_offset = [0, 0]
     def move(self, event):
         if not self.attacking:
             if event.type == pygame.KEYDOWN:
@@ -19,6 +20,8 @@ class Player(Entity):
                     self.entity_attack_(attack_types.meele)
                 if event.key == pygame.K_k:
                     self.entity_attack_(attack_types.long_range)
+                if event.key == pygame.K_LSHIFT:
+                    self.entity_sprint()
                 if event.key == pygame.K_a:
                     self.horizontal_velocity -= self.velocity
                     self.dest_rect_index = 0
@@ -39,6 +42,7 @@ class Player(Entity):
                         self.horizontal_velocity += self.velocity
                     if event.key == pygame.K_d:
                         self.horizontal_velocity -= self.velocity
+
     def update_indexes(self, dt):
         self.dest_rect_index += dt * self.animation_speed 
         # debug(f"{str(int(self.dest_rect_index)): <3}, {str(int(len(self.image_bank.image_dest_rect[self.image_index][self.direction])))}")
@@ -80,4 +84,3 @@ class Player(Entity):
                     print("a is pressed", self.horizontal_velocity, self.velocity)
                 self.attacking = False
                 self.attack_can_damage = True
-

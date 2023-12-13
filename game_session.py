@@ -6,11 +6,14 @@ import time
 from debug import *
 
 class Floor(pygame.sprite.Sprite):
-    def __init__(self, rect, screen, group):
+    def __init__(self, rect, screen, group, image = None):
         super().__init__()
         # Floor Image, rect and screen to draw to
+        
         self.image = pygame.Surface((rect.w, rect.h))
-        self.image.fill((0,0,0))
+        if image != None:
+            self.image = image
+        # self.image.fill((0,0,0))
         self.rect = self.image.get_rect()
         self.rect.x = rect.x
         self.rect.y = rect.y
@@ -39,13 +42,14 @@ class Game_Session:
         self.groups = {"draw": self.draw_sprites, "player": self.player_group, "ground": self.ground_group, "entity": self.entity_group, "all": self.all_sprites, "bullets": self.bullets_group}
 
 
-        # Background 
+        # Background  and terrain
         self.bg = pygame.image.load("graphics/bg_1.jpg")
         self.bg = pygame.transform.scale(self.bg, (1200, 600))
         self.bg_rect = self.bg.get_rect()
+        self.camera_offset = [0, 0]
 
         # Game ground
-        ground_rect = pygame.Rect(0, 580, 1200, 20)
+        ground_rect = pygame.Rect(-1200, 580, 3600, 20)
         self.floor = Floor(ground_rect, screen, self.ground_group)
         self.ground_group.add(self.floor)
         self.draw_sprites.add(self.floor)
@@ -61,6 +65,12 @@ class Game_Session:
     def draw(self, dt):
         pass
     def run(self, screen):
+        self.terrain_1_surf = pygame.image.load("graphics/terrain/terrain_300x10.png").convert_alpha()
+        self.terrain_rect = pygame.Rect(900, 500, 0, 0)
+        self.terrain_1 = Floor(self.terrain_rect, self.screen, None, self.terrain_1_surf)
+        self.ground_group.add(self.terrain_1)
+        self.all_sprites.add(self.terrain_1)
+        self.draw_sprites.add(self.terrain_1)
         # Game player
         test_en = Player(self.player_id, self.player_name, self.player_character, self.image_bank, self.groups)
         test_en.setup()

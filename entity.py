@@ -42,7 +42,7 @@ class Image_Bank:
 
 
 class Entity(pygame.sprite.Sprite):
-    def __init__(self, entity_id, entity_name,  image_bank, groups):
+    def __init__(self, entity_id, entity_name,  image_bank, groups, blit_rect_offset_x = 0, blit_rect_offset_y = 0):
         super().__init__()
         # Player ID
         self.entity_id = entity_id
@@ -74,6 +74,7 @@ class Entity(pygame.sprite.Sprite):
         self.animation_speed = 20
         self.clock = 0
         self.jumping = False
+        self.blit_rect_offsets = [blit_rect_offset_x, blit_rect_offset_y]
 
         # Attack
         self.is_attacking = False
@@ -91,7 +92,13 @@ class Entity(pygame.sprite.Sprite):
         self.attack_animation_sequence_2 = ['Attack1', 'Attack2']
 
         # Test propeties
-        self.x_position, self.y_position = 0, 0
+        self.position = [0, 0]
+        self.entity_sprint_velocity = 5000
+        self.entity_sprint_time = 0.03
+        self.ml = 1
+        self.sprint_time = time.time()
+        self.sprinting = False
+        # self.position[0], self.position[1] = 0, 0
         self.velocity = 300
         self.horizontal_velocity = 0
         self.vertical_velocity = 0
@@ -99,6 +106,20 @@ class Entity(pygame.sprite.Sprite):
         self.jump_hight = 800
         print(f"Created entity: {self.entity_id}")
 
+    def entity_timers(self):
+        ttime = time.time()
+        time_difference = self.sprint_time - time.time() 
+        # debug(str(time_difference))
+        debug(f"{str(self.horizontal_velocity): >7}")
+        # print(abs(time_difference))
+        if self.sprinting:
+            if self.attacking:
+                self.sprinting = False
+                print("attacking in sprint")
+            if abs(time_difference) >= self.entity_sprint_time:
+                print("tim! sprint")
+                self.horizontal_velocity -= self.entity_sprint_velocity * self.ml
+                self.sprinting = False
     def setup(self):
         pass
 
@@ -109,7 +130,7 @@ class Entity(pygame.sprite.Sprite):
         
         # Update entity's x position due to entity moving
         if not self.attacking:
-            self.x_position += self.horizontal_velocity * dt 
+            self.position[0] += self.horizontal_velocity * dt 
 
         # Entities collisions with floor
         for floor in self.ground_group:
@@ -129,20 +150,34 @@ class Entity(pygame.sprite.Sprite):
             elif self.body_rect.right > floor.rect.left and self.body_rect.right < floor.rect.right:
                 if ( self.body_rect.top <= floor.rect.top and self.body_rect.bottom >= floor.rect.bottom ) or ( self.body_rect.top >= floor.rect.top and self.body_rect.bottom <= floor.rect.bottom ):
                     self.body_rect.right = floor.rect.left
-                    self.x_position = floor.rect.left - 50
+                    self.position[0] = floor.rect.left - 50
 
             elif self.body_rect.left < floor.rect.right and self.body_rect.left > floor.rect.left:
                 if ( self.body_rect.top <= floor.rect.top and self.body_rect.bottom >= floor.rect.bottom ) or ( self.body_rect.top >= floor.rect.top and self.body_rect.bottom <= floor.rect.bottom ):
                     self.body_rect.left = floor.rect.left
-                    self.x_position = floor.rect.right
+                    self.position[0] = floor.rect.right
 
 
         # Update entity's vertivcal position if not attacking cuz it's cool 
         if not self.attacking:
-            self.y_position += self.vertical_velocity * dt 
-        self.body_rect.x = int(math.ceil(self.x_position))
-        self.body_rect.y = int(self.y_position)
+            self.position[1] += self.vertical_velocity * dt 
+        self.body_rect.x = int(math.ceil(self.position[0]))
+        self.body_rect.y = int(self.position[1])
 
+
+    def entity_sprint(self):
+        print("sprint")
+        self.sprint_time = time.time()
+        print(self.sprint_time)
+        if not self.sprinting:
+            self.ml = 1
+            if self.direction == 0:
+                print("right")
+            elif self.direction == 1:
+                print("left")
+                self.ml *= -1
+            self.horizontal_velocity += self.entity_sprint_velocity * self.ml
+            self.sprinting = True
 
     def entity_attack_(self, type = 0, extra = None):
         if type == attack_types.meele:
@@ -224,7 +259,7 @@ class Entity(pygame.sprite.Sprite):
         t = f"{self.entity_id}: {str(self.life_points)}"
         debug(t)
         # Update blit rect
-        self.blit_rect = pygame.Rect(self.body_rect.x - 75, self.body_rect.y - 75, self.image_bank.image_size, self.image_bank.image_size)
+        self.blit_rect = pygame.Rect(self.body_rect.x - 75 + self.blit_rect_offsets[0], self.body_rect.y - 75 + self.blit_rect_offsets[1], self.image_bank.image_size, self.image_bank.image_size)
         # Update attack range rect
         self.attack_range_rect.y = self.body_rect.top - 25
 
@@ -240,6 +275,7 @@ class Entity(pygame.sprite.Sprite):
         # Try to draw and  catch potential errors
         try:
             pygame.draw.rect(screen, (0, 0, 0), self.attack_range_rect, 2)
+            pygame.draw.rect(screen, (255, 255, 255), self.body_rect)
 
             # screen.blit(
             #             self.image_bank.images[self.image_index][self.direction], # Imgae ( images, which image, what dirrection )
@@ -297,6 +333,7 @@ class Entity(pygame.sprite.Sprite):
         self.rect = self.blit_rect
 
         self.attack()
+        self.entity_timers()
         if self.life_points <= 0:
             print(f"{self.entity_id} died. l bozo")
             self.kill()

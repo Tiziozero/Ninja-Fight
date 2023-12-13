@@ -11,7 +11,7 @@ font = pygame.font.Font('fonts/CaskaydiaCoveNerdFont-Regular.ttf', 20)
 debug_list = []
 
 def debug(text):
-    text_surf = font.render(text, True, (255,255,255))
+    text_surf = font.render(str(text), True, (255,255,255))
     text_rect = text_surf.get_rect()
     # screen.blit(text_surf, text_rect)
     debug_list.append([text_surf, text_rect])
