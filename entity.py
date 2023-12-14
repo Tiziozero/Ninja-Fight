@@ -1,5 +1,5 @@
 import pygame, os, sys, time, math
-from debug import debug, print_debug
+from debug import debug, print_debug, log
 from enum import Enum
 
 class attack_types(Enum):
@@ -11,7 +11,7 @@ class attack_types(Enum):
 
 class Image_Bank:
     def __init__(self, path):
-        print("image for path", path)
+        log("image for path " + path)
         self.images = {} #contains actual images
         self.images_dirctory_path_relative_to_main_file = path
         self.image_rect = {} # contains images rect
@@ -26,9 +26,9 @@ class Image_Bank:
         self.load_img(path)
 
     def load_img(self, path):
-        print(f"loading images for {path}...")
+        log(f"loading images for {path}...")
         for name in self.image_names:
-            print(f"    loading {name}")
+            log(f"    loading {name}")
             path_to_image = path + name + self.image_format 
 
             image_current = pygame.image.load(path_to_image).convert_alpha()
@@ -104,20 +104,20 @@ class Entity(pygame.sprite.Sprite):
         self.vertical_velocity = 0
         # self.in_air = True
         self.jump_hight = 800
-        print(f"Created entity: {self.entity_id}")
+        log(f"Created entity: {self.entity_id}")
 
     def entity_timers(self):
         ttime = time.time()
         time_difference = self.sprint_time - time.time() 
         # debug(str(time_difference))
         debug(f"{str(self.horizontal_velocity): >7}")
-        # print(abs(time_difference))
+        # log(abs(time_difference))
         if self.sprinting:
             if self.attacking:
                 self.sprinting = False
-                print("attacking in sprint")
+                log("attacking in sprint")
             if abs(time_difference) >= self.entity_sprint_time:
-                print("tim! sprint")
+                log("tim! sprint")
                 self.horizontal_velocity -= self.entity_sprint_velocity * self.ml
                 self.sprinting = False
     def setup(self):
@@ -166,15 +166,15 @@ class Entity(pygame.sprite.Sprite):
 
 
     def entity_sprint(self):
-        print("sprint")
+        log("sprint")
         self.sprint_time = time.time()
-        print(self.sprint_time)
+        log(self.sprint_time)
         if not self.sprinting:
             self.ml = 1
             if self.direction == 0:
-                print("right")
+                log("right")
             elif self.direction == 1:
-                print("left")
+                log("left")
                 self.ml *= -1
             self.horizontal_velocity += self.entity_sprint_velocity * self.ml
             self.sprinting = True
@@ -202,9 +202,9 @@ class Entity(pygame.sprite.Sprite):
                 self.attack_index = 0
             b_vel = 1000
             if self.direction == 0:
-                print("right")
+                log("right")
             elif self.direction == 1:
-                print("left")
+                log("left")
                 b_vel *= -1
             bullet = Bullet(self.entity_id, self.groups, self.body_rect.centerx, self.body_rect.centery, b_vel)
             # self.groups["bullets"].add(bullet)
@@ -214,8 +214,8 @@ class Entity(pygame.sprite.Sprite):
 
     def attack(self):
         if self.is_attacking:
-            print(self.groups["entity"])
-            print(self.dest_rect_index)
+            log(self.groups["entity"])
+            log(self.dest_rect_index)
             for entity in self.groups["entity"]:
                 # Checks if entity isn't itself
                 if entity.entity_id != self.entity_id:
@@ -224,16 +224,15 @@ class Entity(pygame.sprite.Sprite):
                         # Checks of attack_range_rect's top or bottom  are inside entity's body_rect
                         if ( self.body_rect.top <= entity.body_rect.bottom and self.body_rect.top >= entity.body_rect.top ) or ( self.body_rect.bottom <= entity.body_rect.bottom and self.body_rect.bottom >= entity.body_rect.top ):
                             # If yes then inflict damage
-                            print("attack")
-                            print(entity.entity_id)
+                            log("attack")
+                            log(entity.entity_id)
                             entity.attacked(self.attack_points, 0.5)
                 else:
                     pass
             self.is_attacking = False
 
     def attacked(self, attack_points, percentage_extra):
-        print("damage: ", end="")
-        print(attack_points, percentage_extra, attack_points*percentage_extra, attack_points + attack_points*percentage_extra)
+        log(f"damage: {attack_points}, {percentage_extra}, {attack_points*percentage_extra}, {attack_points + attack_points*percentage_extra}")
         self.life_points -= (attack_points + attack_points * percentage_extra)
 
 
@@ -274,18 +273,19 @@ class Entity(pygame.sprite.Sprite):
         
         # Try to draw and  catch potential errors
         try:
-            pygame.draw.rect(screen, (0, 0, 0), self.attack_range_rect, 2)
-            pygame.draw.rect(screen, (255, 255, 255), self.body_rect)
 
+            # pygame.draw.rect(screen, (0, 0, 0), self.attack_range_rect, 2)
+            # pygame.draw.rect(screen, (255, 255, 255), self.body_rect)
+            pass
             # screen.blit(
             #             self.image_bank.images[self.image_index][self.direction], # Imgae ( images, which image, what dirrection )
             #             self.blit_rect, # Draw rect ( where to draw )
             #             self.image_bank.image_dest_rect[self.image_index][self.direction][math.floor(self.dest_rect_index)] # Which tile ( destination rects, for which image, what direction ) ( use of self.image_idex, self.direction and self.dest_rect_index for reasons undefined for now )
             #         )
         except IndexError:
-            print(f"index error: -> {self.dest_rect_index}, {math.floor(self.dest_rect_index)}")
+            log(f"index error: -> {self.dest_rect_index}, {math.floor(self.dest_rect_index)}")
         except:
-            print("Unkown error!")
+            log("Unkown error!")
 
     def update_indexes(self, dt):
         self.dest_rect_index += dt * self.animation_speed 
@@ -309,7 +309,7 @@ class Entity(pygame.sprite.Sprite):
         # is_attacking should be true only for one loop and onlu between 'ipdate+index' and 'attacking'
         # 'attacking' is called 'attacked' for now
         if self.attacking and int(self.dest_rect_index) == 4 and self.is_attacking == False and self.attack_can_damage:
-            print("attacking")
+            log("attacking")
             self.attack_can_damage = False
             self.is_attacking = True
 
@@ -335,9 +335,9 @@ class Entity(pygame.sprite.Sprite):
         self.attack()
         self.entity_timers()
         if self.life_points <= 0:
-            print(f"{self.entity_id} died. l bozo")
+            log(f"{self.entity_id} died. l bozo")
             self.kill()
-        if self.is_attacking: print("is attacking")
+        if self.is_attacking: log("is attacking")
 
 
 class Bullet(pygame.sprite.Sprite):
@@ -376,8 +376,8 @@ class Bullet(pygame.sprite.Sprite):
         for entity in self.groups["entity"]:
             if entity.entity_id != self.entity_id:
                 if self.is_collision(entity.body_rect, self.rect):
-                    print(entity.entity_id)
-                    print(f"-- damage: {self.attack_points + self.attack_points*self.buffs}")
+                    log(entity.entity_id)
+                    log(f"-- damage: {self.attack_points + self.attack_points*self.buffs}")
                     entity.attacked(self.attack_points, self.buffs)
                     # entity.life_points -= self.attack_points * self.buffs
                     self.kill()
@@ -392,5 +392,5 @@ class Bullet(pygame.sprite.Sprite):
         t = abs(self.startcoords[0] - abs(self.rect.centerx))
         debug(f"updatig bullet; {str( str(self.rect.x)): <30}, {str(t)}")
         if t >= 3000:
-            print("bullet killed")
+            log("bullet killed")
             self.kill()

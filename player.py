@@ -1,7 +1,7 @@
 import pygame, os, sys, time, math
 from random import choice
 from entity import Entity, Bullet, attack_types
-from debug import debug, print_debug
+from debug import debug, print_debug, log
 
 
 class Player(Entity):
@@ -34,7 +34,7 @@ class Player(Entity):
                     self.dest_rect_index = 0
                     # self.rect.y -= 1
                     self.jumping = True
-                    print("Jump", self.vertical_velocity)
+                    log(f"Jump: {self.vertical_velocity}")
 
             if event.type == pygame.KEYUP:
                 if not self.attacking:
@@ -65,7 +65,7 @@ class Player(Entity):
         # is_attacking should be true only for one loop and onlu between 'ipdate+index' and 'attacking'
         # 'attacking' is called 'attacked' for now
         if self.attacking and int(self.dest_rect_index) == 4 and self.is_attacking == False and self.attack_can_damage:
-            print("attacking")
+            log("attacking")
             self.attack_can_damage = False
             self.is_attacking = True
 
@@ -77,10 +77,10 @@ class Player(Entity):
                 keys = pygame.key.get_pressed()
                 if keys[pygame.K_d]:
                     self.horizontal_velocity += self.velocity
-                    print("d is pressed", self.horizontal_velocity, self.velocity)
+                    log("d is pressed, {self.horizontal_velocity}, {self.velocity}")
                 
                 if keys[pygame.K_a]:
                     self.horizontal_velocity -= self.velocity
-                    print("a is pressed", self.horizontal_velocity, self.velocity)
+                    log("a is pressed, {self.horizontal_velocity}, {self.velocity}")
                 self.attacking = False
                 self.attack_can_damage = True

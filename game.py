@@ -15,6 +15,7 @@ class Game:
         print("Game created")
         
     def setup(self):
+        debug.setup(self.screen, False)
         print("setup...")
         with open('player_data.json', 'r') as file:
             data = json.load(file)

@@ -1,14 +1,22 @@
 import pygame
 pygame.init()
 
-screen = pygame.display.get_surface()
+# screen = pygame.display.get_surface()
+log_true = False
 
-def setup(screen ,screen_):
+def setup(screen_, log_bool):
     screen = screen_
+    screen = screen_
+    # log_true = log_bool
 
 font = pygame.font.Font('fonts/CaskaydiaCoveNerdFont-Regular.ttf', 20)
 
 debug_list = []
+
+def log(text, end=None):
+    if log_true:
+        text = str(text)
+        print("Log:", text, end=end)
 
 def debug(text):
     text_surf = font.render(str(text), True, (255,255,255))
