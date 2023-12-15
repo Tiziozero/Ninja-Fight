@@ -32,7 +32,7 @@ class Game_Session:
         # Groups
         self.all_sprites = pygame.sprite.Group()
         self.draw_sprites = pygame.sprite.Group()
-        self.player_group = pygame.sprite.GroupSingle()
+        self.player_group = pygame.sprite.Group()
         self.ground_group = pygame.sprite.Group()
         self.entity_group = pygame.sprite.Group()
         self.bullets_group = pygame.sprite.Group()
@@ -59,14 +59,12 @@ class Game_Session:
         print("setup...")
         with open('terrain_1.json', 'r') as file:
             data = json.load(file)
-            print("len")
-            print(data)
-            # def __init__(self, rect, screen, group, image = None):
+            log(str(f"data: {data}, length terrain: {len(data)}"))# def __init__(self, rect, screen, group, image = None):
             terrain_1_surf = pygame.image.load("graphics/terrain/terrain_300x10.png").convert_alpha()
             for key, val in data.items():
-                print(key, val)
-                print(val[0])
-                print(val[1])
+                # log(key, val)
+                # log(val[0])
+                # log(val[1])
                 rect_ = pygame.Rect(val[0], val[1], 0, 0)
                 floor = Floor(rect_, self.screen, self.ground_group, image=terrain_1_surf)
                 self.ground_group.add(floor)
@@ -79,16 +77,27 @@ class Game_Session:
     def run(self, screen):
         self.setup_terrain(0)
         # Game player
-        test_en = Player(self.player_id, self.player_name, self.player_character, self.image_bank, self.groups)
+        test_en = Player(self.player_id, self.player_name, self.player_character, self.image_bank, self.groups, player=0)
         test_en.setup()
         # Test entity enemy
         test_enemy_1 = Enemy_1('32001207', "george",  self.image_bank, self.groups)
         self.entity_group.add(test_en)
-        self.entity_group.add(test_enemy_1)
+        # self.entity_group.add(test_enemy_1)
         self.all_sprites.add(test_en)
-        self.all_sprites.add(test_enemy_1)
+        # self.all_sprites.add(test_enemy_1)
         self.draw_sprites.add(test_en)
-        self.draw_sprites.add(test_enemy_1)
+        # self.draw_sprites.add(test_enemy_1)
+        self.player_group.add(test_en)
+        test_en = Player(str(int(self.player_id) + 1), self.player_name, self.player_character, self.image_bank, self.groups, player=1)
+        test_en.setup()
+        # Test entity enemy
+        test_enemy_1 = Enemy_1('32001207', "george",  self.image_bank, self.groups)
+        self.entity_group.add(test_en)
+        # self.entity_group.add(test_enemy_1)
+        self.all_sprites.add(test_en)
+        # self.all_sprites.add(test_enemy_1)
+        self.draw_sprites.add(test_en)
+        # self.draw_sprites.add(test_enemy_1)
         self.player_group.add(test_en)
 
         # Setup game variables
@@ -106,7 +115,8 @@ class Game_Session:
                         pygame.quit()
                         quit()
                 # Entity events
-                test_en.move(event)
+                for entity in self.entity_group:
+                    entity.move(event)
 
 
             # Update and draw background

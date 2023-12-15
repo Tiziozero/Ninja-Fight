@@ -5,7 +5,7 @@ from debug import debug, print_debug, log
 
 
 class Player(Entity):
-    def __init__(self, entity_id, entity_name, player_character,  image_bank, groups):
+    def __init__(self, entity_id, entity_name, player_character,  image_bank, groups, player=0):
         super().__init__(entity_id=entity_id, entity_name=entity_name, image_bank=image_bank, groups=groups, blit_rect_offset_x=0, blit_rect_offset_y=3)
         self.entity_group = groups["entity"]
         self.is_attacking = False
@@ -13,42 +13,73 @@ class Player(Entity):
         self.attack_animation_sequence_1 = ['Attack1', 'Attack2']
         self.attack_animation_sequence_2 = ['Attack1', 'Attack2']
         self.camera_offset = [0, 0]
+        self.__player__ = player
     def move(self, event):
-        if not self.attacking:
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_j:
-                    self.entity_attack_(attack_types.meele)
-                if event.key == pygame.K_k:
-                    self.entity_attack_(attack_types.long_range)
-                if event.key == pygame.K_LSHIFT:
-                    self.entity_sprint()
-                if event.key == pygame.K_a:
-                    self.horizontal_velocity -= self.velocity
-                    self.dest_rect_index = 0
-                if event.key == pygame.K_d:
-                    self.horizontal_velocity += self.velocity
-                    self.dest_rect_index = 0
-                if event.key == pygame.K_SPACE:
-                    if not self.jumping:
-                        self.vertical_velocity = -self.jump_hight
-                    self.dest_rect_index = 0
-                    # self.rect.y -= 1
-                    self.jumping = True
-                    log(f"Jump: {self.vertical_velocity}")
-
-            if event.type == pygame.KEYUP:
-                if not self.attacking:
+        if self.__player__ == 0:
+            if not self.attacking:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_j:
+                        self.entity_attack_(attack_types.meele)
+                    if event.key == pygame.K_k:
+                        self.entity_attack_(attack_types.long_range)
+                    if event.key == pygame.K_LSHIFT:
+                        self.entity_sprint()
                     if event.key == pygame.K_a:
-                        self.horizontal_velocity += self.velocity
-                    if event.key == pygame.K_d:
                         self.horizontal_velocity -= self.velocity
+                        self.dest_rect_index = 0
+                    if event.key == pygame.K_d:
+                        self.horizontal_velocity += self.velocity
+                        self.dest_rect_index = 0
+                    if event.key == pygame.K_SPACE:
+                        if not self.jumping:
+                            self.vertical_velocity = -self.jump_hight
+                        self.dest_rect_index = 0
+                        # self.rect.y -= 1
+                        self.jumping = True
+                        log(f"Jump: {self.vertical_velocity}", level=3)
+
+                if event.type == pygame.KEYUP:
+                    if not self.attacking:
+                        if event.key == pygame.K_a:
+                            self.horizontal_velocity += self.velocity
+                        if event.key == pygame.K_d:
+                            self.horizontal_velocity -= self.velocity
+        if self.__player__ == 1:
+            if not self.attacking:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        self.entity_attack_(attack_types.meele)
+                    if event.key == pygame.K_RSHIFT:
+                        self.entity_attack_(attack_types.long_range)
+                    if event.key == pygame.K_DOWN:
+                        self.entity_sprint()
+                    if event.key == pygame.K_LEFT:
+                        self.horizontal_velocity -= self.velocity
+                        self.dest_rect_index = 0
+                    if event.key == pygame.K_RIGHT:
+                        self.horizontal_velocity += self.velocity
+                        self.dest_rect_index = 0
+                    if event.key == pygame.K_UP:
+                        if not self.jumping:
+                            self.vertical_velocity = -self.jump_hight
+                        self.dest_rect_index = 0
+                        # self.rect.y -= 1
+                        self.jumping = True
+                        log(f"Jump: {self.vertical_velocity}", level=3)
+
+                if event.type == pygame.KEYUP:
+                    if not self.attacking:
+                        if event.key == pygame.K_LEFT:
+                            self.horizontal_velocity += self.velocity
+                        if event.key == pygame.K_RIGHT:
+                            self.horizontal_velocity -= self.velocity
 
     def update_indexes(self, dt):
         self.dest_rect_index += dt * self.animation_speed 
         # debug(f"{str(int(self.dest_rect_index)): <3}, {str(int(len(self.image_bank.image_dest_rect[self.image_index][self.direction])))}")
         # debug(str(self.dest_rect_index))
-        t = f"current index len; {len(self.image_bank.image_dest_rect[self.image_index][self.direction])}, image index: {self.image_index}"
-        debug(t)
+        # t = f"current index len; {len(self.image_bank.image_dest_rect[self.image_index][self.direction])}, image index: {self.image_index}"
+        # debug(t)
         # t = f"attacking: {str(self.attacking): <10}; dest rect index: {str(int(self.dest_rect_index)): <10}; is attacking: {str(self.is_attacking): <10}; attack can damage: {str(self.attack_can_damage): <10}"
         # debug(t)
         # Player will attack if:
@@ -65,7 +96,7 @@ class Player(Entity):
         # is_attacking should be true only for one loop and onlu between 'ipdate+index' and 'attacking'
         # 'attacking' is called 'attacked' for now
         if self.attacking and int(self.dest_rect_index) == 4 and self.is_attacking == False and self.attack_can_damage:
-            log("attacking")
+            log("attacking", level=3)
             self.attack_can_damage = False
             self.is_attacking = True
 
@@ -75,12 +106,21 @@ class Player(Entity):
                 # for entity in self.entity_group:
                 self.vertical_velocity = 0
                 keys = pygame.key.get_pressed()
-                if keys[pygame.K_d]:
-                    self.horizontal_velocity += self.velocity
-                    log("d is pressed, {self.horizontal_velocity}, {self.velocity}")
-                
-                if keys[pygame.K_a]:
-                    self.horizontal_velocity -= self.velocity
-                    log("a is pressed, {self.horizontal_velocity}, {self.velocity}")
+                if self.__player__ == 0:
+                    if keys[pygame.K_d]:
+                        self.horizontal_velocity += self.velocity
+                        log("d is pressed, {self.horizontal_velocity}, {self.velocity}", level=3)
+                    
+                    if keys[pygame.K_a]:
+                        self.horizontal_velocity -= self.velocity
+                        log("a is pressed, {self.horizontal_velocity}, {self.velocity}", level=3)
+                if self.__player__ == 1:
+                    if keys[pygame.K_RIGHT]:
+                        self.horizontal_velocity += self.velocity
+                        log("right is pressed, {self.horizontal_velocity}, {self.velocity}", level=3)
+                    
+                    if keys[pygame.K_LEFT]:
+                        self.horizontal_velocity -= self.velocity
+                        log("left is pressed, {self.horizontal_velocity}, {self.velocity}", level=3)
                 self.attacking = False
                 self.attack_can_damage = True
