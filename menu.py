@@ -13,13 +13,22 @@ class Game_Menu:
         self.font = pygame.font.Font("fonts/DangerNight.otf", 50)
         with open('buttons_menu.json', 'r') as buttons:
             buttons = json.load(buttons)
-            print(buttons)
+            log(f"loading buttons: {buttons}", level=1)
             for info in buttons:
                 text = self.font.render(info["name"], True, (20, 120, 108))
                 rect = text.get_rect(center=(int(info["x"]), int(info["y"])))
-                print("done")
-                button = Button(rect, text, 1)
+                log(f"done loading button {info['name']}, button return value: {info['return']}", level=2)
+                button = Button(rect, text, int(info["return"]))
                 self.buttons.add(button)
+
+    def get_button(self, pos):
+        x, y = pos[0], pos[1]
+        for button in self.buttons:
+            if x > button.rect.left and x < button.rect.right:
+                if y > button.rect.top and y < button .rect.bottom:
+                    return button.function
+
+        return 0
 
 
     def run(self):
@@ -28,6 +37,16 @@ class Game_Menu:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+                if event.type == pygame.MOUSEBUTTONUP:
+                    if event.button == 1:
+                        ret_val = int(self.get_button(pygame.mouse.get_pos()))
+                        if ret_val == 1:
+                            log("game selected", level=2)
+                            return 1
+                        elif ret_val == 2:
+                            log("quit selected", level=2)
+                            pygame.quit()
+                            sys.exit()
 
             self.screen.fill((0,0,0))
             self.buttons.draw(self.screen)
@@ -39,6 +58,4 @@ class Button(pygame.sprite.Sprite):
         super().__init__()
         self.rect = rect
         self.image = surf
-        self.button_function_return = function
-    
-        
+        self.function = function

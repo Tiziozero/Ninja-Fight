@@ -1,14 +1,14 @@
 [
 	{
-		"name": "button",
+		"name": "game",
 		"x": 600,
 		"y": 300,
-		"return": 5
+		"return": 1
 	},
 	{
-		"name": "button other",
+		"name": "quit",
 		"x": 600,
 		"y": 400,
-		"return": 6
+		"return": 2
 	}
 ]

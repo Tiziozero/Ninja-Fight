@@ -20,7 +20,7 @@ debug_list = []
 
 def log(text, end=None, level=0):
     if log_true:
-        if level >= log_level:
+        if level <= log_level:
             for i in range(level): print("\t", end='')
             text = str(text)
             print("Log:", text, end=end)

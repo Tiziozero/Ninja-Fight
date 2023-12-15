@@ -11,7 +11,7 @@ class attack_types(Enum):
 
 class Image_Bank:
     def __init__(self, path):
-        log("image for path " + path)
+        log("image for path " + path, level=1)
         self.images = {} #contains actual images
         self.images_dirctory_path_relative_to_main_file = path
         self.image_rect = {} # contains images rect

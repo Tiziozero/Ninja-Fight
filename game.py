@@ -2,6 +2,7 @@ import pygame
 import game_session
 import menu
 import debug
+from debug import log
 import json
 import sys
 class Game:
@@ -13,26 +14,26 @@ class Game:
         self.player_name = ""
         self.setup()
 
-        print("Game created")
+        log("Game created")
         
     def setup(self):
         debug.setup(self.screen, False)
-        print("setup...")
+        log("setup...", level=0)
         with open('player_data.json', 'r') as file:
             data = json.load(file)
             self.player_id = int(data["player_id"])
             self.player_name = data["name"]
-            print(self.player_id)
-            print(self.player_name)
+            log(f"Game player id:   {self.player_id}", level=0)
+            log(f"Game player name: {self.player_name}", level=0)
 
 
     def run(self):
-        print("Running")
+        log("Running")
         menu_ = menu.Game_Menu(self.screen)
         menu_.run()
         game = game_session.Game_Session(self.screen)
         if game.setup_game_player(self.player_id, self.player_name, "lonely_fui"):
             game.run(self.screen)
         else:
-            print("error setting up player game data")
+            log("error setting up player game data", level=0)
             sys.exit()
