@@ -1,11 +1,12 @@
 import pygame
 import game_session
+import menu
 import debug
 import json
 import sys
 class Game:
     def __init__(self):
-        pygame.init()
+        # pygame.init()
         self.screen = pygame.display.set_mode((1200, 600))
         debug.screen = self.screen
         self.player_id = 00000000
@@ -27,6 +28,8 @@ class Game:
 
     def run(self):
         print("Running")
+        menu_ = menu.Game_Menu(self.screen)
+        menu_.run()
         game = game_session.Game_Session(self.screen)
         if game.setup_game_player(self.player_id, self.player_name, "lonely_fui"):
             game.run(self.screen)

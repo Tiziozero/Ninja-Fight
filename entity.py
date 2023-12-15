@@ -117,7 +117,7 @@ class Entity(pygame.sprite.Sprite):
                 self.sprinting = False
                 log("attacking in sprint", level=3)
             if abs(time_difference) >= self.entity_sprint_time:
-                log("tim! sprint", level=3)
+                log("time! sprint", level=3)
                 self.horizontal_velocity -= self.entity_sprint_velocity * self.ml
                 self.sprinting = False
     def setup(self):
@@ -168,7 +168,7 @@ class Entity(pygame.sprite.Sprite):
     def entity_sprint(self):
         log("sprint", level=3)
         self.sprint_time = time.time()
-        log(self.sprint_time)
+        log("time: {self.sprint_time}", level=3)
         if not self.sprinting:
             self.ml = 1
             if self.direction == 0:
@@ -382,7 +382,7 @@ class Bullet(pygame.sprite.Sprite):
             if entity.entity_id != self.entity_id:
                 if self.is_collision(entity.body_rect, self.rect):
                     log(entity.entity_id, level=3)
-                    log(f"-- damage: {self.attack_points + self.attack_points*self.buffs}, level=3")
+                    log(f"-- damage: {self.attack_points + self.attack_points*self.buffs}", level=3)
                     entity.attacked(self.attack_points, self.buffs)
                     # entity.life_points -= self.attack_points * self.buffs
                     self.kill()

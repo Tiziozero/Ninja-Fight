@@ -1,0 +1,14 @@
+[
+	{
+		"name": "button",
+		"x": 600,
+		"y": 300,
+		"return": 5
+	},
+	{
+		"name": "button other",
+		"x": 600,
+		"y": 400,
+		"return": 6
+	}
+]
