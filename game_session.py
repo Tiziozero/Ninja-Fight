@@ -1,8 +1,9 @@
 import pygame, time, json
-from entity import  Image_Bank
+from entity import  Image_Bank, Sound_Bank
 from player import Player
 from enemy_1 import Enemy_1
 from debug import *
+
 
 class Floor(pygame.sprite.Sprite):
     def __init__(self, rect, screen, group, image = None):
@@ -22,12 +23,13 @@ class Floor(pygame.sprite.Sprite):
 class Game_Session:
     def __init__(self, screen):
         # Game variables
-        self.QuitGame = False
+        self.guit_game = False
         self.screen = screen
         # self.rect = (100,100,400,200)
 
-        # Image Banks
+        # Banks
         self.image_bank = Image_Bank("graphics/sprites/")
+        self.sound_bank = Sound_Bank("sounds/sword/")
 
         # Groups
         self.all_sprites = pygame.sprite.Group()
@@ -48,6 +50,7 @@ class Game_Session:
         self.floor = Floor(ground_rect, screen, self.ground_group)
         self.ground_group.add(self.floor)
         self.draw_sprites.add(self.floor)
+        self.bg_music = pygame.mixer.music.load("sounds/music/Like that, Sleep token.mp3")
 
     def setup_game_player(self, player_id, player_name, character):
         self.player_id = player_id
@@ -62,9 +65,6 @@ class Game_Session:
             log(str(f"data: {data}, length terrain: {len(data)}"))# def __init__(self, rect, screen, group, image = None):
             terrain_1_surf = pygame.image.load("graphics/terrain/terrain_300x10.png").convert_alpha()
             for key, val in data.items():
-                # log(key, val)
-                # log(val[0])
-                # log(val[1])
                 rect_ = pygame.Rect(val[0], val[1], 0, 0)
                 floor = Floor(rect_, self.screen, self.ground_group, image=terrain_1_surf)
                 self.ground_group.add(floor)
@@ -75,6 +75,7 @@ class Game_Session:
     def draw(self, dt):
         pass
     def run(self, screen):
+        pygame.mixer.music.play()
         self.setup_terrain(0)
         # Game player
         test_en = Player(self.player_id, self.player_name, self.player_character, self.image_bank, self.groups, player=0)
@@ -102,18 +103,16 @@ class Game_Session:
 
         # Setup game variables
         p_time = time.time()
-        while not self.QuitGame:
+        while not self.guit_game:
             # Update dt
             dt = time.time() - p_time
             p_time = time.time()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    pygame.quit()
-                    quit()
+                    self.guit_game = True
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_q:
-                        pygame.quit()
-                        quit()
+                        self.guit_game = True
                 # Entity events
                 for entity in self.entity_group:
                     entity.move(event)

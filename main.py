@@ -1,3 +1,7 @@
+import pygame
+pygame.init()
+pygame.mixer.init()
+
 import game
 import debug
 debug_log = input("Log messeges? [Y/n] ").lower()
@@ -18,7 +22,7 @@ try:
         print("[2] deper game info")
         print("[3] entity interaction and info")
         print("[4] idk yet")
-        print("[5] important only")
+        print("[5] less important")
         debug.log_level = int(input("Log level:[0-5] "))
 except:
     print("Invalid log level. Log level set to 0.")

@@ -1,5 +1,5 @@
 import pygame
-pygame.init()
+# pygame.init()
 
 # screen = pygame.display.get_surface()
 log_true = False

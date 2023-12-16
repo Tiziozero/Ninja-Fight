@@ -7,7 +7,6 @@ import json
 import sys
 class Game:
     def __init__(self):
-        # pygame.init()
         self.screen = pygame.display.set_mode((1200, 600))
         debug.screen = self.screen
         self.player_id = 00000000

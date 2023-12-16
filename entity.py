@@ -8,6 +8,17 @@ class attack_types(Enum):
     long_range = 2
 
 
+class Sound_Bank:
+    def __init__(self, path):
+        log("loading sounds for path " + path + "...", level=1)
+        self.sounds = {}
+        self.load_sounds(path)
+
+    def load_sounds(self, path):
+        names = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+        log(f"files for {path}: {names}", level=1)
+        for name in names:
+            self.sounds
 
 class Image_Bank:
     def __init__(self, path):
