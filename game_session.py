@@ -78,7 +78,7 @@ class Game_Session:
         pygame.mixer.music.play()
         self.setup_terrain(0)
         # Game player
-        test_en = Player(self.player_id, self.player_name, self.player_character, self.image_bank, self.groups, player=0)
+        test_en = Player(self.player_id, self.player_name, self.player_character, self.image_bank, self.groups, player=0, game_class = self)
         test_en.setup()
         # Test entity enemy
         test_enemy_1 = Enemy_1('32001207', "george",  self.image_bank, self.groups)
@@ -89,7 +89,7 @@ class Game_Session:
         self.draw_sprites.add(test_en)
         # self.draw_sprites.add(test_enemy_1)
         self.player_group.add(test_en)
-        test_en = Player(str(int(self.player_id) + 1), self.player_name, self.player_character, self.image_bank, self.groups, player=1)
+        test_en = Player(str(int(self.player_id) + 1), self.player_name, self.player_character, self.image_bank, self.groups, player=1, game_class = self)
         test_en.setup()
         # Test entity enemy
         test_enemy_1 = Enemy_1('32001207', "george",  self.image_bank, self.groups)

@@ -5,8 +5,8 @@ from debug import debug, print_debug, log
 
 
 class Player(Entity):
-    def __init__(self, entity_id, entity_name, player_character,  image_bank, groups, player=0):
-        super().__init__(entity_id=entity_id, entity_name=entity_name, image_bank=image_bank, groups=groups, blit_rect_offset_x=0, blit_rect_offset_y=3)
+    def __init__(self, entity_id, entity_name, player_character,  image_bank, groups, player=0, game_class=None):
+        super().__init__(entity_id=entity_id, entity_name=entity_name, image_bank=image_bank, groups=groups, blit_rect_offset_x=0, blit_rect_offset_y=3, game_class=game_class)
         self.entity_group = groups["entity"]
         self.is_attacking = False
         self.attack_can_damage = True

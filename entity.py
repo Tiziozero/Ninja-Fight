@@ -18,7 +18,8 @@ class Sound_Bank:
         names = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
         log(f"files for {path}: {names}", level=1)
         for name in names:
-            self.sounds
+            self.sounds[name.split(".mp3")[0]] = pygame.mixer.Sound(path+name)
+        log(f"sounds loaded: {self.sounds}", level=2)
 
 class Image_Bank:
     def __init__(self, path):
@@ -53,11 +54,18 @@ class Image_Bank:
 
 
 class Entity(pygame.sprite.Sprite):
-    def __init__(self, entity_id, entity_name,  image_bank, groups, blit_rect_offset_x = 0, blit_rect_offset_y = 0):
+    def __init__(self, entity_id, entity_name,  image_bank, groups, blit_rect_offset_x = 0, blit_rect_offset_y = 0, game_class = None):
         super().__init__()
         # Player ID
         self.entity_id = entity_id
         self.entity_name = entity_name
+
+        # Image Bank
+        self.image_bank = image_bank
+        if game_class != None:
+            self.game_class = game_class
+            self.image_bank = self.game_class.image_bank
+            self.sound_bank = self.game_class.sound_bank
 
         # Entity Groups
         self.ground_group = groups["ground"]
@@ -70,8 +78,6 @@ class Entity(pygame.sprite.Sprite):
         self.attacking_damage = False
         self.image = pygame.Surface((200,200))
         self.rect = self.image.get_rect(center=(200, 0))
-        # Image Bank
-        self.image_bank = image_bank
 
         # Rectangles
         self.blit_rect = pygame.Rect(200, 0, self.image_bank.image_size, self.image_bank.image_size)
@@ -217,7 +223,7 @@ class Entity(pygame.sprite.Sprite):
             elif self.direction == 1:
                 log("attack to left: long-range", level=3)
                 b_vel *= -1
-            bullet = Bullet(self.entity_id, self.groups, self.body_rect.centerx, self.body_rect.centery, b_vel)
+            bullet = Bullet(self.entity_id, self.groups, self.body_rect.centerx, self.body_rect.centery, b_vel, entity_class=self)
             # self.groups["bullets"].add(bullet)
             self.groups["draw"].add(bullet)
             self.groups["all"].add(bullet)
@@ -225,6 +231,7 @@ class Entity(pygame.sprite.Sprite):
 
     def attack(self):
         if self.is_attacking:
+            self.sound_bank.sounds["sword_wave"].play()
             log(self.groups["entity"], level=4)
             log(self.dest_rect_index, level=4)
             for entity in self.groups["entity"]:
@@ -238,6 +245,7 @@ class Entity(pygame.sprite.Sprite):
                             log("attack", level=4, end='')
                             log(entity.entity_id, level=4)
                             entity.attacked(self.attack_points, 0.5)
+                            self.sound_bank.sounds["sword_damage"].play()
                 else:
                     pass
             self.is_attacking = False
@@ -357,9 +365,12 @@ class Entity(pygame.sprite.Sprite):
 
 
 class Bullet(pygame.sprite.Sprite):
-    def __init__(self, entity_id, groups, x, y, velocity, attack_points = 1000, buffs = [0.5, 0.2, 0.2]):
+    def __init__(self, entity_id, groups, x, y, velocity, attack_points = 1000, buffs = [0.5, 0.2, 0.2], entity_class=0):
         super().__init__()
         self.entity_id = entity_id
+        self.entity_class = entity_class
+        if self.entity_class:
+            self.sound_bank = self.entity_class.sound_bank
         self.groups = groups
         self.image = pygame.Surface((10, 10))
         self.image.fill((255,255,255))
@@ -396,6 +407,12 @@ class Bullet(pygame.sprite.Sprite):
                     log(f"-- damage: {self.attack_points + self.attack_points*self.buffs}", level=3)
                     entity.attacked(self.attack_points, self.buffs)
                     # entity.life_points -= self.attack_points * self.buffs
+                    try:
+                        self.sound_bank.sounds["sword_slash2"].play() # Temprary solution
+                    except NameError as e:
+                        log("ERROR -> {e}", level=0)
+                    except:
+                        log("ERROR -> Unkown error", level=0)
                     self.kill()
 
     def __entity_specific__(self):
