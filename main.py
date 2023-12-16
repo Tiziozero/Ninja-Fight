@@ -4,16 +4,18 @@ pygame.mixer.init()
 
 import game
 import debug
-debug_log = input("Log messeges? [Y/n] ").lower()
-if debug_log == 'y':
-    debug.log_true = True
-else:
-    debug.log_debug = False
-debug_log = input("Display debug? [Y/n] ").lower()
-if debug_log == 'y':
-    debug.debug_true = True
-else:
-    debug.debug_debug = False
+debud = input("debug? [Y/n]")
+if debud.lower() == "y":
+    debug_log = input("Log messeges? [Y/n] ").lower()
+    if debug_log == 'y':
+        debug.log_true = True
+    else:
+        debug.log_debug = False
+    debug_log = input("Display debug? [Y/n] ").lower()
+    if debug_log == 'y':
+        debug.debug_true = True
+    else:
+        debug.debug_debug = False
 
 try:
     if debug.log_true:

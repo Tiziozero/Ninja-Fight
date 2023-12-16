@@ -51,6 +51,7 @@ class Game_Session:
         self.ground_group.add(self.floor)
         self.draw_sprites.add(self.floor)
         self.bg_music = pygame.mixer.music.load("sounds/music/Like that, Sleep token.mp3")
+        pygame.mixer.music.set_volume(0.05)
 
     def setup_game_player(self, player_id, player_name, character):
         self.player_id = player_id
@@ -92,7 +93,7 @@ class Game_Session:
         test_en = Player(str(int(self.player_id) + 1), self.player_name, self.player_character, self.image_bank, self.groups, player=1, game_class = self)
         test_en.setup()
         # Test entity enemy
-        test_enemy_1 = Enemy_1('32001207', "george",  self.image_bank, self.groups)
+        test_enemy_1 = Enemy_1('32001207', "gabiano",  self.image_bank, self.groups)
         self.entity_group.add(test_en)
         # self.entity_group.add(test_enemy_1)
         self.all_sprites.add(test_en)
