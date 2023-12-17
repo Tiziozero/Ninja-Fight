@@ -18,8 +18,9 @@ class Sound_Bank:
         names = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
         log(f"files for {path}: {names}", level=1)
         for name in names:
-            self.sounds[name.split(".mp3")[0]] = pygame.mixer.Sound(path+name)
-            self.sounds[name.split(".mp3")[0]].set_volume(0.1)
+            if name.endswith(".wav"):
+                self.sounds[name.split(".wav")[0]] = pygame.mixer.Sound(path+name)
+                self.sounds[name.split(".wav")[0]].set_volume(0.03)
         log(f"sounds loaded: {self.sounds}", level=2)
 
 class Image_Bank:
