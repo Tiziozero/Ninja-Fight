@@ -21,16 +21,16 @@ class Network:
     def run(self):
         print("game run")
         self.recv_thread = threading.Thread(target=self.recv, args=())
-        # self.send_thread = threading.Thread(target=self.send, args=())
+        self.send_thread = threading.Thread(target=self.send, args=())
         self.recv_thread.start()
-        # self.send_thread.start()
+        self.send_thread.start()
 
     def send(self):
-        return
-        send_data = input("send data: ")
         while self.ongoing and self.server_connected:
+            print("yess")
             try:
-                data = self.network.send(picke.dumps(send_data))
+                send_data = input("send data: ")
+                self.network.send(pickle.dumps(send_data))
                 print("data: {data}")
             except socket.error as e:
                 eprint(e)
@@ -39,11 +39,17 @@ class Network:
             except:
                 eprint("Unknown Error.")
     def recv(self):
+        return
         while True:
             try:
-                print(pickle.loads(self.network.recv(1024)))
+                pass
+                data = pickle.loads(self.network.recv(1024))
+            except socket.error as e:
+                eprint(e)
+            except pickle.UnpicklingError as e:
+                eprint(e)
             except:
-                print("eee")
+                eprint("Unknown Error.")
 if __name__ == '__main__':
-    n = Network('localhost', 48872)
-    n.run()
+    n = Network('localhost', 48878)
+    Network.run(n)

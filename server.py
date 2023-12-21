@@ -22,7 +22,7 @@ class Server:
         self.server.listen()
         self.games = []
 
-   def run(self):
+    def run(self):
         try:
             server_log("Running...")
             while True:
@@ -39,7 +39,6 @@ class Server:
                 conn2.send(pickle.dumps("game_start"))
 
                 game_session = Game_Session_Server(conn, addr, conn2, addr2)
-                game_session.setup()
                 self.games.append(game_session)
 
         except socket.error as e:
@@ -49,35 +48,122 @@ class Server:
         except KeyboardInterrupt:
             server_log("KeyboardInterrupt. Server forcefully closed.", level=0)
         finally:
+            for g in self.games:
+                g.server_close()
             self.server.close()
             server_log("Closed server", level=1)
+
+class Con:
+    def __init__(self, entity_id, conn, addr, game):
+        self.id = entity_id
+        self.conn = conn
+        self.addr = addr
+        self.game = game
+
 class Game_Session_Server:
     def __init__(self, conn, addr, conn2, addr2):
-        self.c1 = conn
-        self.c2 = conn2
+        self.c1 = Con(69348878, conn, addr, self)
+        self.c2 = Con(69348879, conn2, addr2, self)
+        self.server_id = 69420
+        self.connections = []
+        self.connections.append(self.c1)
+        self.connections.append(self.c2)
+        self.data = "hello client"
+        self.server_on = True
 
-    def setup(self):
-        self.run_thread = threading.Thread(target=self.run)
-        self.run_thread.start()
 
-    def sendall(self, data):
-        try:
-            data = pickle.dumps(data)
-            self.c1.send(data)
-            self.c2.send(data)
-        except:
-            eprint("idk  something")
+        startup_thread =  threading.Thread(target=self.run, args=())
+        startup_thread.start()
     def run(self):
-        print("Running server")
-        while True:
+        print(f"started server {self.server_id}")
+        recv_thread_1 = threading.Thread(target=self.recv, args=(self.c1,))
+        recv_thread_1.start()
+        send_thread_1 = threading.Thread(target=self.send, args=(self.c1, "Hello world!",))
+        recv_thread_2 = threading.Thread(target=self.recv, args=(self.c2,))
+        recv_thread_2.start()
+        send_thread_2 = threading.Thread(target=self.send, args=(self.c2, "Hello world!",))
+        recv_thread_1.join()
+        recv_thread_2.join()
+        self.server_close()
+        
+
+    def send(self, con, data):
+        return
+        while self.server_on:
             try:
-                sendall("hello, client")
-                print("send data")
+                con.conn.send(pickle.dumps(data))
+            except socket.error as e:
+                eprint(e)
+                self.server_on = False
+                break
+            except pickle.UnpicklingError as e:
+                eprint(e)
+                self.server_on = False
+                break
+            except EOFError as e:
+                eprint(e)
+                self.server_on = False
+                break
+            except BrokenPipeError as e:
+                eprint(e)
+                self.server_on = False
+                break
+            except ConnectionAbortedError as e:
+                eprint(e)
+                self.server_on = False
+                break
+            except ConnectionResetError as e:
+                eprint(e)
+                self.server_on = False
+                break
             except:
-                pass
+                eprint("Unknown error.")
+                self.server_on = False
+                break
 
 
+    def recv(self, con):
+        while self.server_on:
+            try:
+                data = pickle.loads(con.conn.recv(1024))
+                print(f"Game: {str(self.server_id): <10}; Connection: {str(con.addr): <25}: Data: {data}")
+            except socket.error as e:
+                eprint(e)
+                self.server_on = False
+                break
+            except pickle.UnpicklingError as e:
+                eprint(e)
+                self.server_on = False
+                break
+            except EOFError as e:
+                eprint(e)
+                self.server_on = False
+                break
+            except BrokenPipeError as e:
+                eprint(e)
+                self.server_on = False
+                break
+            except ConnectionAbortedError as e:
+                eprint(e)
+                self.server_on = False
+                break
+            except ConnectionResetError as e:
+                eprint(e)
+                self.server_on = False
+                break
+            except:
+                eprint("Unknown error.")
+                self.server_on = False
+                break
+        server_log(f"ID: {self.server_id}: server_on is False")
+        return
+
+    def server_close(self):
+        self.server_on = False
+        for c in self.connections:
+            c.conn.close()
+        server_log(f"Closed server {self.server_id}.")
 if __name__ == '__main__':
     print("Runiong")
-    server_class = Server("localhost", 48872)
+    server_class = Server("localhost", 48878)
     server_class.run()
