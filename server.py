@@ -40,11 +40,9 @@ class Server:
 
                 game_session = Game_Session_Server(conn, addr, conn2, addr2)
                 self.games.append(game_session)
-
         except socket.error as e:
             server_log("Socket error", level=1)
             eprint(e)
-            # Consider adding cleanup or reinitialization here
         except KeyboardInterrupt:
             server_log("KeyboardInterrupt. Server forcefully closed.", level=0)
         finally:
@@ -68,7 +66,7 @@ class Game_Session_Server:
         self.connections = []
         self.connections.append(self.c1)
         self.connections.append(self.c2)
-        self.data = "hello client"
+        self.data = 0
         self.server_on = True
 
 
@@ -79,47 +77,53 @@ class Game_Session_Server:
         recv_thread_1 = threading.Thread(target=self.recv, args=(self.c1,))
         recv_thread_1.start()
         send_thread_1 = threading.Thread(target=self.send, args=(self.c1, "Hello world!",))
+        send_thread_1.start()
+
         recv_thread_2 = threading.Thread(target=self.recv, args=(self.c2,))
         recv_thread_2.start()
         send_thread_2 = threading.Thread(target=self.send, args=(self.c2, "Hello world!",))
+        send_thread_2.start()
+
+
         recv_thread_1.join()
         recv_thread_2.join()
         self.server_close()
         
 
     def send(self, con, data):
-        return
+        print("Sending data: " + str(data))
         while self.server_on:
             try:
                 con.conn.send(pickle.dumps(data))
             except socket.error as e:
                 eprint(e)
-                self.server_on = False
+                self.server_close()
                 break
             except pickle.UnpicklingError as e:
                 eprint(e)
-                self.server_on = False
+                self.server_close()
                 break
             except EOFError as e:
                 eprint(e)
-                self.server_on = False
+                self.server_close()
                 break
             except BrokenPipeError as e:
                 eprint(e)
-                self.server_on = False
+                self.server_close()
                 break
             except ConnectionAbortedError as e:
                 eprint(e)
-                self.server_on = False
+                self.server_close()
                 break
             except ConnectionResetError as e:
                 eprint(e)
-                self.server_on = False
+                self.server_close()
                 break
             except:
                 eprint("Unknown error.")
-                self.server_on = False
+                self.server_close()
                 break
+            self.data += 1
 
 
     def recv(self, con):
@@ -129,31 +133,31 @@ class Game_Session_Server:
                 print(f"Game: {str(self.server_id): <10}; Connection: {str(con.addr): <25}: Data: {data}")
             except socket.error as e:
                 eprint(e)
-                self.server_on = False
+                self.server_close()
                 break
             except pickle.UnpicklingError as e:
                 eprint(e)
-                self.server_on = False
+                self.server_close()
                 break
             except EOFError as e:
                 eprint(e)
-                self.server_on = False
+                self.server_close()
                 break
             except BrokenPipeError as e:
                 eprint(e)
-                self.server_on = False
+                self.server_close()
                 break
             except ConnectionAbortedError as e:
                 eprint(e)
-                self.server_on = False
+                self.server_close()
                 break
             except ConnectionResetError as e:
                 eprint(e)
-                self.server_on = False
+                self.server_close()
                 break
             except:
                 eprint("Unknown error.")
-                self.server_on = False
+                self.server_close()
                 break
         server_log(f"ID: {self.server_id}: server_on is False")
         return

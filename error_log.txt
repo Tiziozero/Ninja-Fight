@@ -1,0 +1,617 @@
+2023-12-22 15:12:33.326063ERROR -> Unknown Error.
+2023-12-22 15:12:35.377928ERROR -> [WinError 10038] An operation was attempted on something that is not a socket
+2023-12-22 15:12:37.190888  ERROR -> unpickling stack underflow
+2023-12-22 15:12:37.299296  ERROR -> could not find MARK
+2023-12-22 15:12:37.300298  ERROR -> could not find MARK
+2023-12-22 15:12:37.409605  ERROR -> unpickling stack underflow
+2023-12-22 15:12:37.518419  ERROR -> invalid load key, 'w'.
+2023-12-22 15:12:37.627636  ERROR -> could not find MARK
+2023-12-22 15:12:37.628638  ERROR -> could not find MARK
+2023-12-22 15:12:37.736300  ERROR -> could not find MARK
+2023-12-22 15:12:37.736300  ERROR -> could not find MARK
+2023-12-22 15:12:37.845122  ERROR -> invalid load key, 'H'.
+2023-12-22 15:12:38.063253  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:38.170053  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:38.170053  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:38.278536  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:38.386326  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:12:38.386326  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:12:38.495832  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:12:38.606030  ERROR -> unpickling stack underflow
+2023-12-22 15:12:38.715491  ERROR -> invalid load key, '!'.
+2023-12-22 15:12:38.827097  ERROR -> could not find MARK
+2023-12-22 15:12:38.936051  ERROR -> could not find MARK
+2023-12-22 15:12:39.043654  ERROR -> invalid load key, ' '.
+2023-12-22 15:12:39.155396  ERROR -> could not find MARK
+2023-12-22 15:12:39.264111  ERROR -> could not find MARK
+2023-12-22 15:12:39.370453  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:12:39.480699  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:39.590854  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:39.701187  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:39.810776  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:40.121935  ERROR -> unpickling stack underflow
+2023-12-22 15:12:40.230521  ERROR -> could not find MARK
+2023-12-22 15:12:40.340889  ERROR -> unpickling stack underflow
+2023-12-22 15:12:40.449019  ERROR -> invalid load key, 'w'.
+2023-12-22 15:12:40.560082  ERROR -> could not find MARK
+2023-12-22 15:12:40.666807  ERROR -> could not find MARK
+2023-12-22 15:12:40.778407  ERROR -> invalid load key, 'H'.
+2023-12-22 15:12:40.778407  ERROR -> invalid load key, 'H'.
+2023-12-22 15:12:40.994881  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:41.104495  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:41.212099  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:41.320564  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:12:41.431821  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:12:41.541249  ERROR -> unpickling stack underflow
+2023-12-22 15:12:41.649982  ERROR -> invalid load key, '!'.
+2023-12-22 15:12:41.760529  ERROR -> could not find MARK
+2023-12-22 15:12:41.870065  ERROR -> could not find MARK
+2023-12-22 15:12:41.978806  ERROR -> invalid load key, ' '.
+2023-12-22 15:12:42.087222  ERROR -> could not find MARK
+2023-12-22 15:12:42.196803  ERROR -> could not find MARK
+2023-12-22 15:12:42.306933  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:12:42.417100  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:42.527002  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:42.636866  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:42.746151  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:43.074025  ERROR -> unpickling stack underflow
+2023-12-22 15:12:43.182781  ERROR -> could not find MARK
+2023-12-22 15:12:43.283523  ERROR -> unpickling stack underflow
+2023-12-22 15:12:43.294040  ERROR -> unpickling stack underflow
+2023-12-22 15:12:43.387702  ERROR -> invalid load key, 'w'.
+2023-12-22 15:12:43.404727  ERROR -> invalid load key, 'w'.
+2023-12-22 15:12:43.496335  ERROR -> could not find MARK
+2023-12-22 15:12:43.511844  ERROR -> could not find MARK
+2023-12-22 15:12:43.605058  ERROR -> could not find MARK
+2023-12-22 15:12:43.621100  ERROR -> could not find MARK
+2023-12-22 15:12:43.714891  ERROR -> invalid load key, 'H'.
+2023-12-22 15:12:43.730016  ERROR -> invalid load key, 'H'.
+2023-12-22 15:12:43.934603  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:43.949111  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:44.048038  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:44.056120  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:44.155707  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:44.164277  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:44.267982  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:12:44.274497  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:12:44.371891  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:12:44.381904  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:12:44.475863  ERROR -> unpickling stack underflow
+2023-12-22 15:12:44.491951  ERROR -> unpickling stack underflow
+2023-12-22 15:12:44.588344  ERROR -> invalid load key, '!'.
+2023-12-22 15:12:44.604364  ERROR -> invalid load key, '!'.
+2023-12-22 15:12:44.689153  ERROR -> could not find MARK
+2023-12-22 15:12:44.711227  ERROR -> could not find MARK
+2023-12-22 15:12:44.795687  ERROR -> could not find MARK
+2023-12-22 15:12:44.818537  ERROR -> could not find MARK
+2023-12-22 15:12:44.912204  ERROR -> invalid load key, ' '.
+2023-12-22 15:12:44.927897  ERROR -> invalid load key, ' '.
+2023-12-22 15:12:45.019245  ERROR -> could not find MARK
+2023-12-22 15:12:45.035421  ERROR -> could not find MARK
+2023-12-22 15:12:45.130795  ERROR -> could not find MARK
+2023-12-22 15:12:45.143482  ERROR -> could not find MARK
+2023-12-22 15:12:45.237245  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:12:45.253139  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:12:45.338279  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:45.364160  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:45.455614  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:45.470560  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:45.564158  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:45.580412  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:45.667844  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:45.687876  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:45.998270  ERROR -> unpickling stack underflow
+2023-12-22 15:12:46.013288  ERROR -> unpickling stack underflow
+2023-12-22 15:12:46.106420  ERROR -> could not find MARK
+2023-12-22 15:12:46.121930  ERROR -> could not find MARK
+2023-12-22 15:12:46.215012  ERROR -> unpickling stack underflow
+2023-12-22 15:12:46.231070  ERROR -> unpickling stack underflow
+2023-12-22 15:12:46.326381  ERROR -> invalid load key, 'w'.
+2023-12-22 15:12:46.340894  ERROR -> invalid load key, 'w'.
+2023-12-22 15:12:46.435717  ERROR -> could not find MARK
+2023-12-22 15:12:46.450223  ERROR -> could not find MARK
+2023-12-22 15:12:46.544999  ERROR -> could not find MARK
+2023-12-22 15:12:46.560954  ERROR -> could not find MARK
+2023-12-22 15:12:46.655426  ERROR -> invalid load key, 'H'.
+2023-12-22 15:12:46.670456  ERROR -> invalid load key, 'H'.
+2023-12-22 15:12:46.875919  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:46.890433  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:46.984241  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:46.999418  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:47.091332  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:47.108090  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:47.200506  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:12:47.217546  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:12:47.309303  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:12:47.325327  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:12:47.419271  ERROR -> unpickling stack underflow
+2023-12-22 15:12:47.435296  ERROR -> unpickling stack underflow
+2023-12-22 15:12:47.529369  ERROR -> invalid load key, '!'.
+2023-12-22 15:12:47.543903  ERROR -> invalid load key, '!'.
+2023-12-22 15:12:47.639180  ERROR -> could not find MARK
+2023-12-22 15:12:47.656204  ERROR -> could not find MARK
+2023-12-22 15:12:47.749940  ERROR -> could not find MARK
+2023-12-22 15:12:47.764242  ERROR -> could not find MARK
+2023-12-22 15:12:47.857359  ERROR -> invalid load key, ' '.
+2023-12-22 15:12:47.872891  ERROR -> invalid load key, ' '.
+2023-12-22 15:12:47.965463  ERROR -> could not find MARK
+2023-12-22 15:12:47.981977  ERROR -> could not find MARK
+2023-12-22 15:12:48.073908  ERROR -> could not find MARK
+2023-12-22 15:12:48.089418  ERROR -> could not find MARK
+2023-12-22 15:12:48.184503  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:12:48.200024  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:12:48.292973  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:48.309488  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:48.403762  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:48.418273  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:48.512197  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:48.529232  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:48.622298  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:48.639235  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:48.946316  ERROR -> unpickling stack underflow
+2023-12-22 15:12:48.960337  ERROR -> unpickling stack underflow
+2023-12-22 15:12:49.055213  ERROR -> could not find MARK
+2023-12-22 15:12:49.071080  ERROR -> could not find MARK
+2023-12-22 15:12:49.164053  ERROR -> unpickling stack underflow
+2023-12-22 15:12:49.180210  ERROR -> unpickling stack underflow
+2023-12-22 15:12:49.274398  ERROR -> invalid load key, 'w'.
+2023-12-22 15:12:49.289910  ERROR -> invalid load key, 'w'.
+2023-12-22 15:12:49.381309  ERROR -> could not find MARK
+2023-12-22 15:12:49.397334  ERROR -> could not find MARK
+2023-12-22 15:12:49.491009  ERROR -> could not find MARK
+2023-12-22 15:12:49.508038  ERROR -> could not find MARK
+2023-12-22 15:12:49.600598  ERROR -> invalid load key, 'H'.
+2023-12-22 15:12:49.616625  ERROR -> invalid load key, 'H'.
+2023-12-22 15:12:49.819791  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:49.834820  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:49.927401  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:49.944045  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:50.039402  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:50.055426  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:50.148753  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:12:50.165298  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:12:50.256490  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:12:50.273021  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:12:50.365300  ERROR -> unpickling stack underflow
+2023-12-22 15:12:50.380814  ERROR -> unpickling stack underflow
+2023-12-22 15:12:50.472993  ERROR -> invalid load key, '!'.
+2023-12-22 15:12:50.489512  ERROR -> invalid load key, '!'.
+2023-12-22 15:12:50.584378  ERROR -> could not find MARK
+2023-12-22 15:12:50.599890  ERROR -> could not find MARK
+2023-12-22 15:12:50.693379  ERROR -> could not find MARK
+2023-12-22 15:12:50.708901  ERROR -> could not find MARK
+2023-12-22 15:12:50.802964  ERROR -> invalid load key, ' '.
+2023-12-22 15:12:50.819481  ERROR -> invalid load key, ' '.
+2023-12-22 15:12:50.910754  ERROR -> could not find MARK
+2023-12-22 15:12:50.925781  ERROR -> could not find MARK
+2023-12-22 15:12:51.020405  ERROR -> could not find MARK
+2023-12-22 15:12:51.036180  ERROR -> could not find MARK
+2023-12-22 15:12:51.130596  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:12:51.146193  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:12:51.240660  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:51.256702  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:51.349231  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:51.365379  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:51.457640  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:51.473307  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:51.565451  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:51.581493  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:51.892649  ERROR -> unpickling stack underflow
+2023-12-22 15:12:51.908071  ERROR -> unpickling stack underflow
+2023-12-22 15:12:52.002309  ERROR -> could not find MARK
+2023-12-22 15:12:52.017316  ERROR -> could not find MARK
+2023-12-22 15:12:52.109488  ERROR -> unpickling stack underflow
+2023-12-22 15:12:52.124512  ERROR -> unpickling stack underflow
+2023-12-22 15:12:52.220071  ERROR -> invalid load key, 'w'.
+2023-12-22 15:12:52.234747  ERROR -> invalid load key, 'w'.
+2023-12-22 15:12:52.328413  ERROR -> could not find MARK
+2023-12-22 15:12:52.344069  ERROR -> could not find MARK
+2023-12-22 15:12:52.438601  ERROR -> could not find MARK
+2023-12-22 15:12:52.454154  ERROR -> could not find MARK
+2023-12-22 15:12:52.549173  ERROR -> invalid load key, 'H'.
+2023-12-22 15:12:52.565264  ERROR -> invalid load key, 'H'.
+2023-12-22 15:12:52.769426  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:52.785448  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:52.878026  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:52.893637  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:52.985349  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:53.000860  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:53.093028  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:12:53.108559  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:12:53.204587  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:12:53.220099  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:12:53.313263  ERROR -> unpickling stack underflow
+2023-12-22 15:12:53.328779  ERROR -> unpickling stack underflow
+2023-12-22 15:12:53.421225  ERROR -> invalid load key, '!'.
+2023-12-22 15:12:53.437251  ERROR -> invalid load key, '!'.
+2023-12-22 15:12:53.530263  ERROR -> could not find MARK
+2023-12-22 15:12:53.546317  ERROR -> could not find MARK
+2023-12-22 15:12:53.639467  ERROR -> could not find MARK
+2023-12-22 15:12:53.655501  ERROR -> could not find MARK
+2023-12-22 15:12:53.751336  ERROR -> invalid load key, ' '.
+2023-12-22 15:12:53.766366  ERROR -> invalid load key, ' '.
+2023-12-22 15:12:53.859110  ERROR -> could not find MARK
+2023-12-22 15:12:53.874718  ERROR -> could not find MARK
+2023-12-22 15:12:53.968155  ERROR -> could not find MARK
+2023-12-22 15:12:53.985031  ERROR -> could not find MARK
+2023-12-22 15:12:54.076128  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:12:54.092211  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:12:54.184978  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:54.200489  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:54.295502  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:54.311015  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:54.403738  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:54.419256  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:54.513159  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:54.529269  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:54.841209  ERROR -> unpickling stack underflow
+2023-12-22 15:12:54.857258  ERROR -> unpickling stack underflow
+2023-12-22 15:12:54.950540  ERROR -> could not find MARK
+2023-12-22 15:12:54.966132  ERROR -> could not find MARK
+2023-12-22 15:12:55.059433  ERROR -> unpickling stack underflow
+2023-12-22 15:12:55.074454  ERROR -> unpickling stack underflow
+2023-12-22 15:12:55.167439  ERROR -> invalid load key, 'w'.
+2023-12-22 15:12:55.184473  ERROR -> invalid load key, 'w'.
+2023-12-22 15:12:55.276611  ERROR -> could not find MARK
+2023-12-22 15:12:55.292578  ERROR -> could not find MARK
+2023-12-22 15:12:55.386383  ERROR -> could not find MARK
+2023-12-22 15:12:55.400891  ERROR -> could not find MARK
+2023-12-22 15:12:55.493820  ERROR -> invalid load key, 'H'.
+2023-12-22 15:12:55.509333  ERROR -> invalid load key, 'H'.
+2023-12-22 15:12:55.713550  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:55.729063  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:55.820732  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:55.837305  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:55.929422  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:55.945367  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:56.040651  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:12:56.055682  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:12:56.150448  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:12:56.165588  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:12:56.258695  ERROR -> unpickling stack underflow
+2023-12-22 15:12:56.274246  ERROR -> unpickling stack underflow
+2023-12-22 15:12:56.366803  ERROR -> invalid load key, '!'.
+2023-12-22 15:12:56.382318  ERROR -> invalid load key, '!'.
+2023-12-22 15:12:56.476505  ERROR -> could not find MARK
+2023-12-22 15:12:56.492612  ERROR -> could not find MARK
+2023-12-22 15:12:56.586833  ERROR -> could not find MARK
+2023-12-22 15:12:56.603426  ERROR -> could not find MARK
+2023-12-22 15:12:56.697565  ERROR -> invalid load key, ' '.
+2023-12-22 15:12:56.713586  ERROR -> invalid load key, ' '.
+2023-12-22 15:12:56.806158  ERROR -> could not find MARK
+2023-12-22 15:12:56.821679  ERROR -> could not find MARK
+2023-12-22 15:12:56.914032  ERROR -> could not find MARK
+2023-12-22 15:12:56.929553  ERROR -> could not find MARK
+2023-12-22 15:12:57.024470  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:12:57.038502  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:12:57.132677  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:57.148249  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:57.243385  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:57.258559  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:57.350666  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:57.365158  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:57.460294  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:57.476409  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:57.789095  ERROR -> unpickling stack underflow
+2023-12-22 15:12:57.803751  ERROR -> unpickling stack underflow
+2023-12-22 15:12:57.898173  ERROR -> could not find MARK
+2023-12-22 15:12:57.913794  ERROR -> could not find MARK
+2023-12-22 15:12:58.007564  ERROR -> unpickling stack underflow
+2023-12-22 15:12:58.023569  ERROR -> unpickling stack underflow
+2023-12-22 15:12:58.115962  ERROR -> invalid load key, 'w'.
+2023-12-22 15:12:58.131479  ERROR -> invalid load key, 'w'.
+2023-12-22 15:12:58.224904  ERROR -> could not find MARK
+2023-12-22 15:12:58.240419  ERROR -> could not find MARK
+2023-12-22 15:12:58.334328  ERROR -> could not find MARK
+2023-12-22 15:12:58.348838  ERROR -> could not find MARK
+2023-12-22 15:12:58.442522  ERROR -> invalid load key, 'H'.
+2023-12-22 15:12:58.458322  ERROR -> invalid load key, 'H'.
+2023-12-22 15:12:58.662963  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:58.678514  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:58.771214  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:58.788241  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:58.879532  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:58.894809  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:12:58.989138  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:12:59.005168  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:12:59.099332  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:12:59.116357  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:12:59.209485  ERROR -> unpickling stack underflow
+2023-12-22 15:12:59.226115  ERROR -> unpickling stack underflow
+2023-12-22 15:12:59.321352  ERROR -> invalid load key, '!'.
+2023-12-22 15:12:59.336374  ERROR -> invalid load key, '!'.
+2023-12-22 15:12:59.429880  ERROR -> could not find MARK
+2023-12-22 15:12:59.446528  ERROR -> could not find MARK
+2023-12-22 15:12:59.540529  ERROR -> could not find MARK
+2023-12-22 15:12:59.556118  ERROR -> could not find MARK
+2023-12-22 15:12:59.647913  ERROR -> invalid load key, ' '.
+2023-12-22 15:12:59.662924  ERROR -> invalid load key, ' '.
+2023-12-22 15:12:59.756013  ERROR -> could not find MARK
+2023-12-22 15:12:59.771035  ERROR -> could not find MARK
+2023-12-22 15:12:59.865652  ERROR -> could not find MARK
+2023-12-22 15:12:59.880674  ERROR -> could not find MARK
+2023-12-22 15:12:59.973481  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:12:59.988990  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:13:00.084190  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:00.098698  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:00.194774  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:00.209283  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:00.302413  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:00.317969  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:00.411665  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:00.426688  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:00.739470  ERROR -> unpickling stack underflow
+2023-12-22 15:13:00.754604  ERROR -> unpickling stack underflow
+2023-12-22 15:13:00.846364  ERROR -> could not find MARK
+2023-12-22 15:13:00.861436  ERROR -> could not find MARK
+2023-12-22 15:13:00.955602  ERROR -> unpickling stack underflow
+2023-12-22 15:13:00.970824  ERROR -> unpickling stack underflow
+2023-12-22 15:13:01.064049  ERROR -> invalid load key, 'w'.
+2023-12-22 15:13:01.080807  ERROR -> invalid load key, 'w'.
+2023-12-22 15:13:01.175163  ERROR -> could not find MARK
+2023-12-22 15:13:01.190676  ERROR -> could not find MARK
+2023-12-22 15:13:01.285548  ERROR -> could not find MARK
+2023-12-22 15:13:01.301064  ERROR -> could not find MARK
+2023-12-22 15:13:01.393109  ERROR -> invalid load key, 'H'.
+2023-12-22 15:13:01.409625  ERROR -> invalid load key, 'H'.
+2023-12-22 15:13:01.610845  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:01.626878  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:01.719886  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:01.736537  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:01.829175  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:01.844201  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:01.937692  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:13:01.953231  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:13:02.047938  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:13:02.063830  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:13:02.157877  ERROR -> unpickling stack underflow
+2023-12-22 15:13:02.173410  ERROR -> unpickling stack underflow
+2023-12-22 15:13:02.266641  ERROR -> invalid load key, '!'.
+2023-12-22 15:13:02.281663  ERROR -> invalid load key, '!'.
+2023-12-22 15:13:02.374406  ERROR -> could not find MARK
+2023-12-22 15:13:02.389913  ERROR -> could not find MARK
+2023-12-22 15:13:02.481740  ERROR -> could not find MARK
+2023-12-22 15:13:02.498356  ERROR -> could not find MARK
+2023-12-22 15:13:02.591233  ERROR -> invalid load key, ' '.
+2023-12-22 15:13:02.607260  ERROR -> invalid load key, ' '.
+2023-12-22 15:13:02.699545  ERROR -> could not find MARK
+2023-12-22 15:13:02.714567  ERROR -> could not find MARK
+2023-12-22 15:13:02.808842  ERROR -> could not find MARK
+2023-12-22 15:13:02.824469  ERROR -> could not find MARK
+2023-12-22 15:13:02.916544  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:13:02.933088  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:13:03.026757  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:03.041265  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:03.136061  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:03.151581  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:03.245786  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:03.260944  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:03.355705  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:03.370213  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:03.683643  ERROR -> unpickling stack underflow
+2023-12-22 15:13:03.699165  ERROR -> unpickling stack underflow
+2023-12-22 15:13:03.791657  ERROR -> could not find MARK
+2023-12-22 15:13:03.808684  ERROR -> could not find MARK
+2023-12-22 15:13:03.904505  ERROR -> unpickling stack underflow
+2023-12-22 15:13:03.918863  ERROR -> unpickling stack underflow
+2023-12-22 15:13:04.013496  ERROR -> invalid load key, 'w'.
+2023-12-22 15:13:04.028003  ERROR -> invalid load key, 'w'.
+2023-12-22 15:13:04.120414  ERROR -> could not find MARK
+2023-12-22 15:13:04.137435  ERROR -> could not find MARK
+2023-12-22 15:13:04.230805  ERROR -> could not find MARK
+2023-12-22 15:13:04.246596  ERROR -> could not find MARK
+2023-12-22 15:13:04.341445  ERROR -> invalid load key, 'H'.
+2023-12-22 15:13:04.355464  ERROR -> invalid load key, 'H'.
+2023-12-22 15:13:04.560356  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:04.575886  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:04.668783  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:04.684890  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:04.778757  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:04.793790  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:04.888019  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:13:04.904044  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:13:04.998695  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:13:05.014715  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:13:05.108383  ERROR -> unpickling stack underflow
+2023-12-22 15:13:05.124404  ERROR -> unpickling stack underflow
+2023-12-22 15:13:05.218866  ERROR -> invalid load key, '!'.
+2023-12-22 15:13:05.234429  ERROR -> invalid load key, '!'.
+2023-12-22 15:13:05.326623  ERROR -> could not find MARK
+2023-12-22 15:13:05.343648  ERROR -> could not find MARK
+2023-12-22 15:13:05.435357  ERROR -> could not find MARK
+2023-12-22 15:13:05.450868  ERROR -> could not find MARK
+2023-12-22 15:13:05.546525  ERROR -> invalid load key, ' '.
+2023-12-22 15:13:05.563550  ERROR -> invalid load key, ' '.
+2023-12-22 15:13:05.657983  ERROR -> could not find MARK
+2023-12-22 15:13:05.672610  ERROR -> could not find MARK
+2023-12-22 15:13:05.766631  ERROR -> could not find MARK
+2023-12-22 15:13:05.783725  ERROR -> could not find MARK
+2023-12-22 15:13:05.877651  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:13:05.892747  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:13:05.986213  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:06.001723  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:06.094371  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:06.110882  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:06.203840  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:06.218352  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:06.313529  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:06.328041  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:06.640595  ERROR -> unpickling stack underflow
+2023-12-22 15:13:06.656217  ERROR -> unpickling stack underflow
+2023-12-22 15:13:06.748301  ERROR -> could not find MARK
+2023-12-22 15:13:06.765112  ERROR -> could not find MARK
+2023-12-22 15:13:06.856827  ERROR -> unpickling stack underflow
+2023-12-22 15:13:06.872708  ERROR -> unpickling stack underflow
+2023-12-22 15:13:06.964401  ERROR -> invalid load key, 'w'.
+2023-12-22 15:13:06.980916  ERROR -> invalid load key, 'w'.
+2023-12-22 15:13:07.074055  ERROR -> could not find MARK
+2023-12-22 15:13:07.089575  ERROR -> could not find MARK
+2023-12-22 15:13:07.182581  ERROR -> could not find MARK
+2023-12-22 15:13:07.198725  ERROR -> could not find MARK
+2023-12-22 15:13:07.290299  ERROR -> invalid load key, 'H'.
+2023-12-22 15:13:07.306327  ERROR -> invalid load key, 'H'.
+2023-12-22 15:13:07.508503  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:07.522523  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:07.616039  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:07.630548  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:07.724847  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:07.741156  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:07.834487  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:13:07.848757  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:13:07.945933  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:13:07.961443  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:13:08.052935  ERROR -> unpickling stack underflow
+2023-12-22 15:13:08.068588  ERROR -> unpickling stack underflow
+2023-12-22 15:13:08.161025  ERROR -> invalid load key, '!'.
+2023-12-22 15:13:08.176606  ERROR -> invalid load key, '!'.
+2023-12-22 15:13:08.270595  ERROR -> could not find MARK
+2023-12-22 15:13:08.287170  ERROR -> could not find MARK
+2023-12-22 15:13:08.379562  ERROR -> could not find MARK
+2023-12-22 15:13:08.394583  ERROR -> could not find MARK
+2023-12-22 15:13:08.488086  ERROR -> invalid load key, ' '.
+2023-12-22 15:13:08.503113  ERROR -> invalid load key, ' '.
+2023-12-22 15:13:08.596936  ERROR -> could not find MARK
+2023-12-22 15:13:08.612565  ERROR -> could not find MARK
+2023-12-22 15:13:08.706555  ERROR -> could not find MARK
+2023-12-22 15:13:08.721062  ERROR -> could not find MARK
+2023-12-22 15:13:08.815166  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:13:08.830675  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:13:08.923013  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:08.939086  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:09.033523  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:09.049045  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:09.141881  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:09.157935  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:09.251356  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:09.266385  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:09.577200  ERROR -> unpickling stack underflow
+2023-12-22 15:13:09.593218  ERROR -> unpickling stack underflow
+2023-12-22 15:13:09.684695  ERROR -> could not find MARK
+2023-12-22 15:13:09.700206  ERROR -> could not find MARK
+2023-12-22 15:13:09.792941  ERROR -> unpickling stack underflow
+2023-12-22 15:13:09.809546  ERROR -> unpickling stack underflow
+2023-12-22 15:13:09.903593  ERROR -> invalid load key, 'w'.
+2023-12-22 15:13:09.919639  ERROR -> invalid load key, 'w'.
+2023-12-22 15:13:10.011205  ERROR -> could not find MARK
+2023-12-22 15:13:10.027228  ERROR -> could not find MARK
+2023-12-22 15:13:10.121866  ERROR -> could not find MARK
+2023-12-22 15:13:10.137900  ERROR -> could not find MARK
+2023-12-22 15:13:10.231094  ERROR -> invalid load key, 'H'.
+2023-12-22 15:13:10.247124  ERROR -> invalid load key, 'H'.
+2023-12-22 15:13:10.451712  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:10.467274  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:10.561315  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:10.576550  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:10.670685  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:10.686010  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:10.781374  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:13:10.797453  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:13:10.891076  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:13:10.907103  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:13:11.000544  ERROR -> unpickling stack underflow
+2023-12-22 15:13:11.015567  ERROR -> unpickling stack underflow
+2023-12-22 15:13:11.109223  ERROR -> invalid load key, '!'.
+2023-12-22 15:13:11.124855  ERROR -> invalid load key, '!'.
+2023-12-22 15:13:11.217682  ERROR -> could not find MARK
+2023-12-22 15:13:11.232705  ERROR -> could not find MARK
+2023-12-22 15:13:11.324893  ERROR -> could not find MARK
+2023-12-22 15:13:11.341408  ERROR -> could not find MARK
+2023-12-22 15:13:11.435499  ERROR -> invalid load key, ' '.
+2023-12-22 15:13:11.451020  ERROR -> invalid load key, ' '.
+2023-12-22 15:13:11.544239  ERROR -> could not find MARK
+2023-12-22 15:13:11.559749  ERROR -> could not find MARK
+2023-12-22 15:13:11.652701  ERROR -> could not find MARK
+2023-12-22 15:13:11.668303  ERROR -> could not find MARK
+2023-12-22 15:13:11.763464  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:13:11.779040  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:13:11.873792  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:11.889820  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:11.983655  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:11.998177  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:12.088883  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:12.107907  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:12.198746  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:12.215097  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:12.528403  ERROR -> unpickling stack underflow
+2023-12-22 15:13:12.542912  ERROR -> unpickling stack underflow
+2023-12-22 15:13:12.636851  ERROR -> could not find MARK
+2023-12-22 15:13:12.651152  ERROR -> could not find MARK
+2023-12-22 15:13:12.746910  ERROR -> unpickling stack underflow
+2023-12-22 15:13:12.761420  ERROR -> unpickling stack underflow
+2023-12-22 15:13:12.856047  ERROR -> invalid load key, 'w'.
+2023-12-22 15:13:12.871398  ERROR -> invalid load key, 'w'.
+2023-12-22 15:13:12.967029  ERROR -> could not find MARK
+2023-12-22 15:13:12.981050  ERROR -> could not find MARK
+2023-12-22 15:13:13.075311  ERROR -> could not find MARK
+2023-12-22 15:13:13.091140  ERROR -> could not find MARK
+2023-12-22 15:13:13.183941  ERROR -> invalid load key, 'H'.
+2023-12-22 15:13:13.198029  ERROR -> invalid load key, 'H'.
+2023-12-22 15:13:13.403173  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:13.418689  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:13.511195  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:13.528139  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:13.619648  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:13.636319  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:13.729248  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:13:13.745121  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:13:13.837463  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:13:13.852981  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:13:13.948020  ERROR -> unpickling stack underflow
+2023-12-22 15:13:13.962766  ERROR -> unpickling stack underflow
+2023-12-22 15:13:14.058150  ERROR -> invalid load key, '!'.
+2023-12-22 15:13:14.072656  ERROR -> invalid load key, '!'.
+2023-12-22 15:13:14.168771  ERROR -> could not find MARK
+2023-12-22 15:13:14.182728  ERROR -> could not find MARK
+2023-12-22 15:13:14.276759  ERROR -> could not find MARK
+2023-12-22 15:13:14.293764  ERROR -> could not find MARK
+2023-12-22 15:13:14.386007  ERROR -> invalid load key, ' '.
+2023-12-22 15:13:14.401519  ERROR -> invalid load key, ' '.
+2023-12-22 15:13:14.494074  ERROR -> could not find MARK
+2023-12-22 15:13:14.510099  ERROR -> could not find MARK
+2023-12-22 15:13:14.606740  ERROR -> could not find MARK
+2023-12-22 15:13:14.621250  ERROR -> could not find MARK
+2023-12-22 15:13:14.716584  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:13:14.732095  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:13:14.824822  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:14.840986  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:14.934105  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:14.948628  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:15.042863  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:15.057965  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:15.152801  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:15.168254  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:15.478388  ERROR -> unpickling stack underflow
+2023-12-22 15:13:15.493402  ERROR -> unpickling stack underflow
+2023-12-22 15:13:15.584770  ERROR -> could not find MARK
+2023-12-22 15:13:15.600286  ERROR -> could not find MARK
+2023-12-22 15:13:15.696380  ERROR -> unpickling stack underflow
+2023-12-22 15:13:15.710892  ERROR -> unpickling stack underflow
+2023-12-22 15:13:15.805055  ERROR -> invalid load key, 'w'.
+2023-12-22 15:13:15.821273  ERROR -> invalid load key, 'w'.
+2023-12-22 15:13:15.914008  ERROR -> could not find MARK
+2023-12-22 15:13:15.930523  ERROR -> could not find MARK
+2023-12-22 15:13:16.016908  ERROR -> could not find MARK
+2023-12-22 15:13:16.040935  ERROR -> could not find MARK
+2023-12-22 15:13:16.119050  ERROR -> invalid load key, 'H'.
+2023-12-22 15:13:16.150597  ERROR -> invalid load key, 'H'.
+2023-12-22 15:13:16.339082  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:16.370354  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:16.446970  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:16.478750  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:16.556579  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:16.589131  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:16.666912  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:13:16.699364  ERROR -> invalid load key, '\x10'.
+2023-12-22 15:13:16.775671  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:13:16.806311  ERROR -> invalid load key, '\x04'.
+2023-12-22 15:13:16.913054  ERROR -> unpickling stack underflow
+2023-12-22 15:13:17.023053  ERROR -> invalid load key, '!'.
+2023-12-22 15:13:17.133188  ERROR -> could not find MARK
+2023-12-22 15:13:17.244256  ERROR -> could not find MARK
+2023-12-22 15:13:17.351135  ERROR -> invalid load key, ' '.
+2023-12-22 15:13:17.461396  ERROR -> could not find MARK
+2023-12-22 15:13:17.570372  ERROR -> could not find MARK
+2023-12-22 15:13:17.676244  ERROR -> invalid load key, '\x0c'.
+2023-12-22 15:13:17.789062  ERROR -> invalid load key, '\x00'.
+2023-12-22 15:13:19.826722  ERROR -> [WinError 10038] An operation was attempted on something that is not a socket
+2023-12-22 15:13:21.266414  ERROR -> [WinError 10038] An operation was attempted on something that is not a socket
