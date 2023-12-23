@@ -7,6 +7,20 @@ class attack_types(Enum):
     short_range = 1
     long_range = 2
 
+class Floor(pygame.sprite.Sprite):
+    def __init__(self, rect, screen, group, image = None):
+        super().__init__()
+        # Floor Image, rect and screen to draw to
+        
+        self.image = pygame.Surface((rect.w, rect.h))
+        if image != None:
+            self.image = image
+        # self.image.fill((0,0,0))
+        self.rect = self.image.get_rect()
+        self.rect.x = rect.x
+        self.rect.y = rect.y
+        self.screen = screen
+
 
 class Sound_Bank:
     def __init__(self, path):
@@ -50,9 +64,20 @@ class Image_Bank:
             self.images[name] = [image_current, pygame.transform.flip(image_current, True, False)]
             self.image_rect[name] = self.images[name][0].get_rect()
             self.image_dest_rect[name] = [
-                                            [pygame.Rect(self.image_size * i, 0, self.image_size, self.image_size)  for i in range(self.image_rect[name].w // self.image_size)], # right
-                                            [pygame.Rect(self.image_rect[name].w - self.image_size - self.image_size * i, 0, self.image_size, self.image_size)  for i in range(self.image_rect[name].w // self.image_size)]  # left
-                                            ]
+                                            [
+                                                pygame.Rect(self.image_size * i,
+                                                0,
+                                                self.image_size,
+                                                self.image_size)
+                                                for i in range(self.image_rect[name].w // self.image_size)
+                                            ], # right
+                                            [
+                                                pygame.Rect(self.image_rect[name].w - self.image_size - self.image_size * i,
+                                                0,
+                                                self.image_size, self.image_size)
+                                                for i in range(self.image_rect[name].w // self.image_size)
+                                            ]  # left
+                                         ]
 
 
 class Entity(pygame.sprite.Sprite):

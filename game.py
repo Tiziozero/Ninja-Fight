@@ -1,8 +1,9 @@
 import pygame
-import game_session
-import menu
-import debug
+from game_session import Game_Session
+from game_session_online import Game_Session_Online
+from menu import Game_Menu
 from debug import log
+import debug
 import json
 import sys
 class Game:
@@ -27,12 +28,21 @@ class Game:
 
 
     def run(self):
-        log("Running")
-        menu_ = menu.Game_Menu(self.screen)
-        menu_.run()
-        game = game_session.Game_Session(self.screen)
-        if game.setup_game_player(self.player_id, self.player_name, "lonely_fui"):
-            game.run(self.screen)
-        else:
-            log("error setting up player game data", level=0)
-            sys.exit()
+        menu_ = Game_Menu(self.screen)
+        while True:
+            log("Running")
+            m = menu_.run()
+            if m == 1:
+                game = Game_Session(self.screen)
+                if game.setup_game_player(self.player_id, self.player_name, "lonely_fui"):
+                    game.run(self.screen)
+                else:
+                    log("error setting up player game data", level=0)
+                    sys.exit()
+            elif m == 2:
+                game = Game_Session_Online(self.screen)
+                if game.setup_game_player(self.player_id, self.player_name, "lonely_fui"):
+                    game.run(self.screen)
+                else:
+                    log("error setting up player game data", level=0)
+                    sys.exit()

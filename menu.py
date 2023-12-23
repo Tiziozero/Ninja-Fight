@@ -43,7 +43,10 @@ class Game_Menu:
                         if ret_val == 1:
                             log("game selected", level=2)
                             return 1
-                        elif ret_val == 2:
+                        if ret_val == 2:
+                            log("online game selected", level=2)
+                            return 2
+                        elif ret_val == -1:
                             log("quit selected", level=2)
                             pygame.quit()
                             sys.exit()

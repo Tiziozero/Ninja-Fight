@@ -2,13 +2,19 @@
 	{
 		"name": "game",
 		"x": 600,
-		"y": 300,
+		"y": 200,
 		"return": 1
+	},
+	{
+		"name": "Multiplayer",
+		"x": 600,
+		"y": 300,
+		"return": 2
 	},
 	{
 		"name": "quit",
 		"x": 600,
 		"y": 400,
-		"return": 2
+		"return": -1
 	}
 ]

@@ -2,16 +2,20 @@ import pygame, time, json
 from entity import Floor, Image_Bank, Sound_Bank
 from player import Player
 from enemy_1 import Enemy_1
+from client_con import Network
 from debug import *
 
 
         
 
-class Game_Session:
+class Game_Session_Online:
     def __init__(self, screen):
         # Game variables
         self.guit_game = False
         self.screen = screen
+
+        self.n = Network('localhost', 48878)
+        self.n.setup()
 
         # Banks
         self.image_bank = Image_Bank("graphics/sprites/")

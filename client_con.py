@@ -1,90 +1,58 @@
 import socket
 import pickle
 import threading
-
 from error_log import eprint
 
 class Network:
-    def __init__(self, ip_address, port):
+    def __init__(self, ip_address, port, player=None):
         self.addr = ip_address
         self.port = port
-        self.network = socket.socket()
-        # self.network.bind((self.addr, self.port)) 
-        self.network.connect((self.addr, self.port))
-        self.connection_data = pickle.loads(self.network.recv(1024))
-        print(self.connection_data)
-        self.connection_data1 = pickle.loads(self.network.recv(1024))
-        print(self.connection_data1)
-        self.ongoing = True
+        self.network = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+        self.conn_on = True
         self.server_connected = True
         self.data = 'no data'
 
-    def run(self):
-        print("game run")
-        self.recv_thread = threading.Thread(target=self.recv, args=())
-        self.send_thread = threading.Thread(target=self.send, args=())
-        self.recv_thread.start()
-        self.send_thread.start()
+    def setup(self):
+        # Send a request to the server
+        self.network.sendto(pickle.dumps("Request"), (self.addr, self.port))
 
-    def send(self):
-        while self.ongoing and self.server_connected:
-            print("yess")
-            try:
-                send_data = input("send data: ")
-                if send_data == 'quit':
-                    self.close()
-                    break
-                self.network.send(pickle.dumps(send_data))
-                print("data: {data}")
-            except socket.error as e:
-                eprint(e)
-            except pickle.UnpicklingError as e:
-                eprint(e)
-            #except Keyboardinterrupt as e:
-            #    eprint(e)
-            #    self.close()
-            except:
-                eprint("Unknown Error.")
-    def recv_data(self):
-        try:
-            data = self.network.recv(1024)
-            if data == b'':
-                eprint("Connection closed by the remote host.")
-                return None
-            return pickle.loads(data)
-        except socket.error as e:
-            eprint(e)
-        except pickle.UnpicklingError as e:
-            eprint(e)
-        except EOFError as e:
-             eprint(e)
-        except BrokenPipeError as e:
-            eprint(e)
-        except ConnectionAbortedError as e:
-            eprint(e)
-        except ConnectionResetError as e:
-            eprint(e)
-        except Exception as e:  # Using a generic exception is not best practice
-            eprint(f"Unknown error: {e}")
-        return 'no data'
+        # Corrected typo in 'recvfrom' and removed unnecessary tuple
+        data, _ = self.network.recvfrom(1024)  # 1024 is the buffer size
+        data = pickle.loads(data)
+        print(data)
+        self.port = int(data["port"])
+        print(f"Address: {self.addr}, Port: {self.port}")
 
+        r_thread = threading.Thread(target=self.recv, args=())
+        s_thread = threading.Thread(target=self.send, args=())
+        r_thread.daemon = True
+        s_thread.daemon = True
+        r_thread.start()
+        s_thread.start()
 
     def recv(self):
-        return
-        while True:
+        while self.conn_on:
             try:
-                data = pickle.loads(self.network.recv(1024))
-                return data
-            except socket.error as e:
-                eprint(e)
-            except pickle.UnpicklingError as e:
-                eprint(e)
-            except:
-                eprint("Unknown Error.")
-    def close(self):
-        self.ongoing = False
-        self.network.close()
-        print("Closed network.")
+                data, _ = self.network.recvfrom(1024)
+                data = pickle.loads(data)
+                print(data)
+            except Exception as e:
+                eprint(f"recv: {e}")
+                # self.conn_on = False
+                # break
+    def send(self):
+        while self.conn_on:
+            try:
+                self.network.sendto(pickle.dumps("data"), (self.addr, int(self.port)))
+            except Exception as e:
+                eprint(f"send: {e}")
+                self.conn_on = False
+                break
+
 if __name__ == '__main__':
     n = Network('localhost', 48878)
-    Network.run(n)
+    Network.setup(n)
+    input("Enter to set conn_on to False.")
+    n.conn_on = False
+    input("Enter to end programm.")
